@@ -1,0 +1,46 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des articles{% endblock %}
+
+{% block body %}
+    <div class="admin-page">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col s12">
+                    <a href="{{ path('admin_article_create') }}" class="btn btn-primary" style="float: right"><strong>Ajouter</strong></a>
+                    <h2>Liste des articles</h2>
+                    <table class="table table-hover mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center align-middle">#</th>
+                                <th class="text-center align-middle">Titre</th>
+                                <th class="text-center align-middle">Catégorie</th>
+                                <th class="text-center align-middle">Auteur</th>
+                                <th class="text-center align-middle">Image</th>
+                                <th class="text-center align-middle">Contenu</th>
+                                <th class="text-center align-middle" style="width:16%;">Date de publication</th>
+                                <th class="text-center align-middle">Actions</th>
+                            </tr>
+                        </thead> 
+                        {% for article in articles %}
+                            <tr>
+                                <td class="text-center align-middle">{{article.id}}</td>
+                                <td class="text-center align-middle"><strong>{{article.title}}</strong></td>
+                                <td class="text-center align-middle">{{ article.category.title }}</td>
+                                <td class="text-center align-middle">{{ article.utilisateurs.username }}</td>
+                                <td class="text-center align-middle" style="width:15%;"><img src="{{ article.image }}" alt="Illustration de l'article intitulé : {{article.title}}" style="width: 120px; height:80px;" class="img-fluid"></td>
+                                <td class="align-middle">{{ article.content |slice(0,140)|raw }}</td>
+                                <td class="text-center align-middle">{{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }}</td>
+                                <td class="text-center align-middle">
+                                    <a href="{{ path('admin_article_edit', {'id': article.id}) }}" class="btn btn-success mr-2 mb-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                    <a href="{{ path('admin_article_delete', {'id': article.id}) }}" class="btn btn-danger mr-2 mb-2"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+ {% endblock %}           

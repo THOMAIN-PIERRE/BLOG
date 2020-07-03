@@ -2,11 +2,37 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <title>{% block title %}Bonjour !{% endblock %}</title>
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+        
+        <Link rel = "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity =" sha256- + N4/V/SbAFiW1MPBCXnfnP9QSN3 + Keu+NlB+0ev/YKQ="crossorigin = "anonyme"/>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        
+        
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+
+        {% block nav %}
+            {% include "template_parts/_nav.html.twig" %}
+        {% endblock %}
+        
+        {% block body %}
+            
+        {% endblock %}
+        {% block footer %}
+            {% include "template_parts/_footer.html.twig" %}
+        {% endblock %}
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         {% block javascripts %}{% endblock %}
+
     </body>
 </html>
+

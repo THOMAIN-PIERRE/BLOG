@@ -1,0 +1,33 @@
+{# Gere l'affichage de notre formulaire sur notre site internet #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block stylesheets %}
+
+ <link rel="stylesheet" href="{{ asset('css/contact.css') }}"/>
+
+
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('message') %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="container">
+    <div class="row">
+    <div class="col-md-3">&nbsp;</div>
+		<div class="col-md-5">
+			<div class="bg-light py-3 px-3 mt-5 mb-5">
+                <h1 class="text-center mb-4">Nous contacter</h1>
+
+                 {{ form(contactForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{# {% extends 'base.html.twig' %}
+
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+<div class="container  col-5">
+    <h1 class="mt-5 mb-3">Création d'un article</h1>
+
+
+    {{ form_row(formArticle.title, {'attr': {'placeholder': "Titre de l'article"}}) }}
+
+    {{ form_row(formArticle.content, {'attr': {'placeholder': "Contenu de l'article"}}) }}
+
+    {{ form_row(formArticle.image, {'attr': {'placeholder': "URL de l'image"}}) }}     
+
+
+    <button type="submit" class="btn btn-success mt-3 mb-5">Ajouter l'article</button>
+
+    {{ form_end(formArticle) }}
+</div>
+
+{% endblock %} #}
+
+
+{% extends 'base.html.twig' %}
+
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Publier{% endblock %}
+
+
+{% block body %}
+
+<div class="container mb-5">
+     
+    <h1 class="mt-5 mb-4 text-center">PUBLIER UN ARTICLE</h1>
+    
+    {{form_start(formArticle)}}
+    
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-dark">
+                
+            {{ form_row(formArticle.title, {'label': 'Titre', 'attr': {'placeholder': "Titre de votre article"}}) }}
+
+            {{ form_row(formArticle.category, {'label': 'Catégorie'}) }}
+
+            {{ form_row(formArticle.content, {'label': 'Contenu', 'attr': {'placeholder': "Contenu de votre article"}}) }}
+
+            {{ form_row(formArticle.image, {'label': 'Image d\'illustration', 'attr': {'placeholder': "URL de votre image d'illustration"}}) }}     
+                
+            </div>
+            <div class="alert alert-light">
+            {% if editMode %}
+                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>
+                     <b>Enregistrer les modifications</b>
+            {% else %}
+                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>
+                    <b>Ajouter l'article</b>
+            {% endif %}
+                </button>
+            </div>
+        </div>
+    </div>
+    {{form_end(formArticle)}}
+ 
+</div>
+{% endblock %}

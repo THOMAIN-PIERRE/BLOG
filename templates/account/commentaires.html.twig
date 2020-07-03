@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Vos articles publiés{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <h1 class="my-5">Les commentaires publiés par {{ app.user.username }}</h1>
+    <div class="alert alert-info mt-3">
+        <h2><strong>Retrouvez ci-dessous toutes vos réactions à nos articles</strong></h2>
+        <h3><i>Vous avez publié <strong>{{ app.user.commentaires | length }} commentaire(s)</strong></i></h3>
+    </div>
+    {# Pour boucler sur les articles #}
+    {% for comment in app.user.commentaires %}
+    <hr>
+        <div class="row mt-3 mb-3 text-center align-middle">
+            <div class="col-md-4 text-left align-middle">
+                <h4><strong>Article(s) commenté</strong></h4>
+                <p>
+                    Titre : <strong>{{comment.article.title}}</strong><br>
+                    Catégorie : <strong>{{comment.article.category}}</strong><br>
+                    Publié le {{ comment.createdAt | date ('d/m/Y') }} à {{ comment.createdAt | date ('H:i') }}
+                    <img src="{{comment.article.image}}" alt="Photo d'illustration de l'article {{comment.article.title}}" class="img-fluid">
+                </p>
+            </div>
+            <div class="col-md-5">
+                <h4><strong>Votre commentaire</strong></h4>
+                <p class="text-center align-middle">{{comment.content}}</p>
+            </div>
+            <div class="col-md-3">
+                <h4><strong>Action</strong></h4>
+                <p class="text-center align-middle">
+                    <a href="" class="btn btn-danger btn-lg"><i class="fas fa-trash"></i></a>
+                    
+                </p>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+
+{% endblock %}

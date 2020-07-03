@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bonjour !{% endblock %}
+
+
+
+{% block body %}
+
+
+{# (article>h2{Titre de l'article}+div.metadata{Ecrit le 10/05/2018 dans la catégorie Science}+div.content>img(p>lorem15)*2+A.btn.btn-primary{Lire la suite})*3 #}
+
+
+<article class="container mt-5 mb-5">
+     <h2><b>{{ article.title }}</b></h2>
+    <h4 class="metadata"><i>Publié le {{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }}</h2></i></h4>
+    <h4 class="metadata"><i>Catégorie : <h2 class="badge badge-primary">{{ article.category.title }}</h2></i></h4>
+    <div class="content">
+        <img src="{{ article.image }}" alt="image" class="float-left img-fluid"  style="width: 600px; height:300px; padding-right: 20px;">
+        {# <p>{{ article.content |slice(0,1800)|raw }}</p> #}
+        <p  style="text-align: justify">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+    {# <a href="" class="btn btn-primary mt-5 mb-4 mr-5 float-xl-none float-right"><i class="fa fa-comment" aria-hidden="true"></i> Ajouter un commentaire</a> #}
+    <a href="{{path('main')}}" class="btn btn-primary mt-4 mb-5 mr-5 float-xl-none float-right"><i class="fa fa-reply-all" aria-hidden="true"></i> <b>Retour au fil d'actualité</b></a>
+    <div class="alert alert-dark mb-4">
+<h2 class="alert-heading mb-3"><i class="fa fa-comment" aria-hidden="true"></i> Réagissez à cet article !</h2>
+{{ form_start(commentForm) }}
+{{ form_widget(commentForm) }}
+<button type="submit" class="btn btn-success">Poster !</button>
+{{ form_end(commentForm) }}
+</div>
+    <hr>
+</article>
+<section id="commentaires">
+{% for comment in article.comments %}
+<div class="comment">
+<div class="row">
+<div class="col-3">
+{{comment.author}} (<small>{{comment.createdAt | date('d/m/Y à H:i')}}</small>)
+</div>
+<div class="col mb-5">
+{{comment.content | raw}}
+</div>
+</div>
+</div>
+{% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<article class="container-fluid"></article>
+{# <a style="color:black; font-size: 1.8rem" class="nav-link ml-3 pull-left-top" href="{{path('admin_account_login')}}"><i class="fa fa-cog" aria-hidden="true"></i></a> #}
+<h1 style="text-align:center; border:5px solid blue;" class="mb-4  mt-5"><b>Bienvenue sur .blog !</b></h1>
+<h2 style="color:black; font-size: 1.8rem; text-align:center" class="mb-4">Qui sommes-nous ?</h2>
+
+<div class="container mt-5 mb-5">
+      <div id="demo" class="carousel slide" data-ride="carousel">
+        <!-- Indicateurs -->
+        <ul class="carousel-indicators">
+          <li data-target="#demo" data-slide-to="0" class="active"></li>
+          <li data-target="#demo" data-slide-to="1"></li>
+          <li data-target="#demo" data-slide-to="2"></li>
+          <li data-target="#demo" data-slide-to="3"></li>
+        </ul>
+
+        <!-- Carrousel -->
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://i.ibb.co/Jz6wNYK/blog2.png" alt="Carrousel slide 0" class="d-block w-100">
+            <div class="carousel-caption d-none d-md-block">
+              <h1 style="color:blue"><b>BIENVENUE SUR <i>.blog</i> !</b></h2>
+              <p style="color:blue; font-size: 1.5rem"><b>Déjà 10 ans d'existence et d'exigence au service de votre information !</b></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://i.ibb.co/NnMmHCR/exigence.png" alt="Carrousel slide 1" class="d-block w-100">
+            <div class="carousel-caption d-none d-md-block text-dark">
+              <h1 style="color:blue"><b>Blog d'actualité fondé en 2010</b></h1>
+              <p style="color:blue; font-size: 1.5rem"><b>"Vous informer, vous permettre de réagir à l'actualité et de faire entendre votre voix"</b></p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://i.ibb.co/2K0hWxk/equipe2.png" alt="Carrousel slide 2" class="d-block w-100">
+            <div class="carousel-caption d-none d-md-block">
+              <h1 style="color:yellow"><b>Les fondateurs de ce Blog : une équipe jeune et dynamique</b></h1>
+
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://i.ibb.co/ctcTHkX/votre-Avis-Compte2.png" alt="Carrousel slide 3" class="d-block w-100">
+            <div class="carousel-caption d-none d-md-block">
+              <h1 style="color:yellow"><b></b></h1>
+              <p style="color:yellow; font-size: 1.5rem"><b>Vos contributions et vos commentaires comptent pour nous !</b></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contrôles -->
+        <a class="carousel-control-prev" href="#demo" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Précédent</span>
+        </a>
+        <a class="carousel-control-next" href="#demo" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Suivant</span>
+        </a>
+      </div>
+    </div>
+
+
+<h2 style="color:black; font-size: 1.8rem; text-align:center" class="mb-4">Qu'est-ce que .blog ?</h2>
+<p style="font-size: 1.5rem" class="mb-4">C'est un outils de collecte d'informations qui a pour but de mettre en avant les sujets qui font l'actualité, votre actualité. Faites l'actualité en partageant vos coups de gueule, vos coups de coeur. Débattez sans fin en réagissant aux publications de notre communauté de contributeurs !  </p>
+<h3 style="color:blue; font-size: 2.5rem; text-align:center" class="mb-4">"Avec <b><i>.blog</i></b>, ne subissez plus l'actualité, devenez en acteur"</h3>
+<p style="font-size: 1.5rem" class="mb-4">Par ce que pour nous, être citoyen c'est faire partie d'un tout sans renier son individualité, c'est partager dans le respect, s'enrichir des différences, s'ouvrir aux opinions d'autrui.</p>
+<p style="font-size: 1.5rem" class="mb-4">Nous pensons que nous sommes riche de ce que nous apprenons et pas de ce que nous savons</p>
+<p>
+{% endblock %}
+

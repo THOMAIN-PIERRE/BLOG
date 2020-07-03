@@ -1,0 +1,16 @@
+body {
+    background: url('https://www.ionos.fr/digitalguide/fileadmin/DigitalGuide/Teaser/blog-t.jpg') fixed;
+   background-size: cover;
+}
+
+#formContact{
+   max-width: 600px;
+   padding: 15px;
+   margin: 0 auto;
+   border-radius: 2em;
+   background-color: white;
+   opacity: 0.88;
+}
+label{
+    color: black;
+}
