@@ -17,9 +17,11 @@
 
                 {{form_row(form.username)}}
                 {{form_row(form.email)}}
+                {{form_row(form.avatar)}}
 
-                <p>Voulez vous sauvegarder ces modifications ?</p>
-                <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check-circle" aria-hidden="true"></i> Sauvegarder</button>
+                {# <p>Voulez vous sauvegarder ces modifications ?</p> #}
+                <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check" aria-hidden="true"></i> <b>Valider</b></button>
+                {# <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check-circle" aria-hidden="true"></i><a href="{{ path ('account_profile') }}"> Sauvegarder</a></button> #}
                     
             </div>    
     {{form_end(form)}}

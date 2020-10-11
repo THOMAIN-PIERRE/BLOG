@@ -14,26 +14,35 @@
     {# Pour boucler sur les articles #}
     {% for comment in app.user.commentaires %}
     <hr>
+        <div class="col-md-12 mt-3 text-center align-middle border">
+                <h4><strong>COMMENTAIRE</strong></h4>
+                <p class="text-center align-middle" style="font-size: 1.2em;">{{comment.content}}</p>
+            </div>
         <div class="row mt-3 mb-3 text-center align-middle">
-            <div class="col-md-4 text-left align-middle">
-                <h4><strong>Article(s) commenté</strong></h4>
+            <div class="col-md-5 text-left align-middle mt-3">
+                <h4 class="text-center"><strong>ARTICLE</strong></h4>
                 <p>
                     Titre : <strong>{{comment.article.title}}</strong><br>
                     Catégorie : <strong>{{comment.article.category}}</strong><br>
                     Publié le {{ comment.createdAt | date ('d/m/Y') }} à {{ comment.createdAt | date ('H:i') }}
-                    <img src="{{comment.article.image}}" alt="Photo d'illustration de l'article {{comment.article.title}}" class="img-fluid">
                 </p>
             </div>
-            <div class="col-md-5">
-                <h4><strong>Votre commentaire</strong></h4>
-                <p class="text-center align-middle">{{comment.content}}</p>
+            <div class="col-md-4 align-middle mt-3">
+            <h4 class="text-center"><strong>PHOTO</strong></h4>
+            {# <img src="{{comment.article.image}}" alt="Photo d'illustration de l'article {{comment.article.title}}" class="img-fluid" style="width: 16rem; height:10rem;"> #}
+            <img src="{{comment.article.image}}" alt="Photo d'illustration de l'article {{comment.article.title}}" class="img-fluid" style="width: 16rem; height:10rem;">
             </div>
-            <div class="col-md-3">
-                <h4><strong>Action</strong></h4>
-                <p class="text-center align-middle">
-                    <a href="" class="btn btn-danger btn-lg"><i class="fas fa-trash"></i></a>
+            <div class="col-md-3 mt-3 mb-3">
+                <h4><strong>Note</strong></h4>
+                {# <p class="text-center align-middle">
+                    <a href="" class="btn btn-success btn-lg"><i class="fas fa-edit"></i></a>
+                     <a href="" class="btn btn-danger btn-lg"><i class="fas fa-trash"></i></a>
                     
-                </p>
+                </p> #}
+                
+                <div class="btn btn-success" style="font-size: 0.8em;">
+        {% include 'template_parts/_rating.html.twig' with {'rating' : comment.article.AvgRatings} %}
+                </div>
             </div>
         </div>
         <hr>

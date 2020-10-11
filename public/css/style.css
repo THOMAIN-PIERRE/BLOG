@@ -1,4 +1,15 @@
-
+html,
+body,
+main {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
 footer {
     color: #fff;
     background-attachment: fixed;
@@ -92,3 +103,47 @@ footer .input-group-addon {
     color: white;
     font-weight: 2rem;
 }
+
+/*--------------------------------------------------------------------------*/
+.table-responsive-sm{
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+.table-responsive-md{
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+#newsletter{
+    display: none;
+}
+/*--------------------------------------------------------------------------*/
+div.carousel-caption {
+    text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+/*--------------------------------------------------------------------------*/
+.navbar-item li a:hover {
+    color: yellow !important;
+  }
+span.rating i {
+    color: goldenrod;
+}
+/*MEDIA QUERIES-------------------------------------------------------*/
+ @media screen and (min-width: 300px) and (max-width: 1023px) {
+ 
+    #formNewsletter{
+       display: none;
+    }    
+    #footerContact{
+       text-align:center;
+    } 
+    #footerContact2{
+       display: none;
+    } 
+    body {
+       background-color:#87CEEB;
+       width: auto;
+       height: auto;
+    }         
+ }

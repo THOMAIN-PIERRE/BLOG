@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion du style de mon compte{% endblock %}
+
+{% block body %}
+    <div class="admin-page {{ app.user.bgColor }}">
+
+        <div class="container">
+            <div class="row">
+                <div class="col s12 table-responsive mt-5">
+                    {# <a href="{{ path('admin_users_create') }}" class="btn btn-primary" style="float: right"><strong>Ajouter</strong></a> #}
+                    <h2>PARAMETRES DE STYLE DE MON COMPTE</h2>
+
+                        <div class="row">
+                        <table class="table col-3 mt-5 border">
+                        <thead class="{{ app.user.tableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">Couleur de la barre de navigation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center align-middle" style="font-size: 1.5em;">{{ app.user.navColor }}</td> 
+                            </tr>
+                            <tr>
+                                <td class="text-center align-middle alert alert-success"><a href="{{ path('customizer_edit', {'id': app.user.id}) }}" class="btn btn-success"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+
+
+                        <table class="table col-3 ml-4 mt-5 border">
+                        <thead class="{{ app.user.tableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">Couleur de l'entête des tableaux</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center align-middle" style="font-size: 1.5em;">{{ app.user.tableColor }}</td> 
+                            </tr>
+                            <tr>
+                                <td class="text-center align-middle alert alert-success"><a href="{{ path('customizer_edit', {'id': app.user.id}) }}" class="btn btn-success"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+
+                         <table class="table col-3 ml-4 mt-5 border">
+                        <thead class="{{ app.user.tableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">Couleur de fond d'écran</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center align-middle" style="font-size: 1.5em;">{{ app.user.bgColor }}</td> 
+                            </tr>
+                            <tr>
+                                <td class="text-center align-middle alert alert-success"><a href="{{ path('customizer_edit', {'id': app.user.id}) }}" class="btn btn-success"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+
+
+                        </div>
+                </div>
+            </div>
+        </div> 
+    <footer class="{{ app.user.bgColor }}" style="height: 1000px;"></footer>
+    </div>
+ {% endblock %}  

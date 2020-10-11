@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Users;
 use App\Entity\Article;
 use App\Entity\Comment;
-use App\Entity\PasswordUpdate;
 use App\Form\AccountType;
+use App\Entity\PasswordUpdate;
 use App\Form\PasswordUpdateType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AccountController extends AbstractController
@@ -42,21 +43,23 @@ class AccountController extends AbstractController
      */
     public function profile(Request $request, EntityManagerInterface $manager) {
 
-        $user = $this->getUser();
+        $users = $this->getUser();
 
-        $form = $this->createForm(AccountType::class, $user);
+        $form = $this->createForm(AccountType::class, $users);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
 
-            $manager->persist($user);
+            $manager->persist($users);
             $manager->flush();
 
             $this->addFlash(
                 'sucess',
                 "Votre profil a été mis à jour !"
             );
+
+            return $this->redirectToRoute("account_index");
         }
 
         return $this->render('account/profile.html.twig', [
@@ -64,6 +67,7 @@ class AccountController extends AbstractController
         ]);
     }
 
+    
      /**
      * Permet de modifier le mot de passe
      * 
@@ -116,7 +120,7 @@ class AccountController extends AbstractController
      * Permet d'afficher la liste des articles écrits par un utilisateur
      * 
      * @Route("/account/publications", name="account_publications")
-     * IsGranted("ROLE_USER")
+     * IsGranted("ROLE_EDITOR")
      *
      * @return Response
      */
@@ -133,7 +137,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * Permet d'afficher la liste des commentaires écrits par un utilisateur
+     * Permet d'afficher la liste des commentaires écrits par un utilisateur (Validé et Non encore validé)
      * 
      * @Route("/account/commentaires", name="account_commentaires")
      * IsGranted("ROLE_USER")
@@ -150,6 +154,26 @@ class AccountController extends AbstractController
             'commentaires' => $commentaires
         ]);
 
+    }
+
+    /**
+     *Permet de supprimer son compte utilisateur
+     * 
+     * @Route("/account/{id}/delete", name="account_delete")
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function delete(Users $users, Request $request, EntityManagerInterface $manager)
+    {
+        $manager->remove($users);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            "Votre profil<strong>{$users->getUsername()}</strong> a été supprimé !"
+            );
+
+        return $this->redirectToRoute('main');
     }
 
 }

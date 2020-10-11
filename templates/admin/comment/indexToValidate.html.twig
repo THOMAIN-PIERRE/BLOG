@@ -1,0 +1,60 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des commentaires{% endblock %}
+
+{% block body %}
+    <div class="admin-page {{ app.user.adminBgColor }}">
+
+        <div class="container">
+            <div class="row">
+                <div class="col s12 mt-5">
+                    <a href="{{ path('admin_comment_create') }}" class="btn btn-primary" style="float: right"><strong>Ajouter</strong></a>
+                    <h2>LISTE DES COMMENTAIRES <strong style="color: orange;">"A VALIDER"</strong> </h2>
+                    
+                    {# <h2 class="alert alert-warning p-2 mt-3" style="font-size: 1em;"><i class="fas fa-exclamation-triangle fa-2x"></i><strong style="font-size: 1.4em;"> <u> 8 commentaires</u></strong> en attente de validation</h2> #}
+     
+                    <table class="table table-hover mt-3">
+                        <thead class="{{ app.user.adminTableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">#</th>
+                                <th class="text-center align-middle">Commentaire</th>
+                                <th class="text-center align-middle" style="width:20%;">Date de publication</th>
+                                <th class="text-center align-middle">Statut</th>
+                                <th class="text-center align-middle">Auteur</th>
+                                <th class="text-center align-middle" style="width:10%;"># article</th>
+                                <th class="text-center align-middle" style="width:20%;">Titre article</th>
+                                <th class="text-center align-middle">Actions</th>
+                            </tr>
+                        </thead>
+                        {# {% set i = 1 %} #}
+                        
+                        {% for comment in pagination.commentNonValide %}
+                        {# {% if comment.status is same as ("Non validé")  %} #}
+                        {# {% for comment in commentairesNonValides %} #}
+                                <tr class="text-dark">
+                                    <td class="text-center align-middle">{{ comment.id }}</td>
+                                    <td class="align-middle">{{ comment.content|slice(0,100)|raw }} ...</td>
+                                    <td class="text-center align-middle">{{ comment.createdAt | date ('d/m/Y') }} à {{ comment.createdAt | date ('H:i') }}</td>
+                                    <td class="text-center align-middle">{{ comment.status }}</td>
+                                    <td class="text-center align-middle">{{ comment.utilisateur.username }}</td>
+                                    <td class="text-center align-middle">{{ comment.article.id }}</td>
+                                    <td class="align-middle">{{ comment.article.title }}</td>
+                                    <td class="text-center align-middle">
+                                        <a href="{{ path('admin_comment_edit', {'id': comment.id}) }}" class="btn btn-success mr-2 mb-2"><i class="fas fa-check" aria-hidden="true"></i></a>
+                                        <a href="{{ path('admin_comment_delete', {'id': comment.id}) }}" class="btn btn-danger mr-2 mb-2"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {# {% set i = i+1 %} #}
+                            {# {% endif %} #}
+                        {# {% endfor %} #}
+                        {% endfor %}
+                    </table>
+                    <hr>
+                     {% include 'admin/template_parts/pagination.html.twig' with {'route' : 'admin_comment_toValidate'} %}
+                </div>
+            </div>
+        </div>
+    </div>
+     <footer class="{{ app.user.adminBgColor }}" style="height: 1000px;"></footer>
+ {% endblock %}   

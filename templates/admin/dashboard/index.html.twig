@@ -3,59 +3,60 @@
 {% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-3">
     <div class="row">
-        <div class="col">
+        <div class="col-6">
             <div class="card bg-primary text-white mb-3 text-center">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-4">
-                            <i class="fas fa-users fa-3x"></i>
+                        <div class="col-3">
+                            <i class="fas fa-users fa-3x" style="color:white; text-shadow: 2px 6px 2px black;"></i>
                         </div>
-                        <div class="col-8">
-                            <h4 class="card-title"> <b>Contributeurs</b></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {# <div class="col">
-            <div class="card text-white bg-dark mb-3 text-center">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-4">
-                            <i class="fas fa-hotel fa-3x"></i>
-                        </div>
-                        <div class="col-8">
-                            <h4 class="card-title"> annonces</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> #}
-        <div class="col">
-            <div class="card text-white bg-warning mb-3 text-center">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-4">
-                            <i class="fas fa-folder fa-3x"></i>
-                        </div>
-                        <div class="col-8">
-                            <h4 class="card-title"> <b>Articles</b></h4>
+                        <div class="col-9">
+                            <h4 class="card-title" style="color:white; text-shadow: 2px 6px 2px black; font-size: 1.8em;"> <b><span class="border-dark rounded-circle p-3 bg-dark">{{ stats.users }}</span> MEMBRES</b></h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-6">
+            <div class="card text-white bg-info mb-3 text-center">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <i class="fas fa-pencil-alt fa-3x" style="color:white; text-shadow: 2px 6px 2px black;"></i>
+                        </div>
+                        <div class="col-9">
+                            <h4 class="card-title" style="color:white; text-shadow: 2px 6px 2px black; font-size: 1.8em;"> <b><span class="border-dark rounded-circle p-3 bg-dark">{{ stats.article }}</span> ARTICLES</b></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
             <div class="card text-white bg-success mb-3 text-center">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-4">
-                            <i class="fas fa-comments fa-3x"></i>
+                        <div class="col-3">
+                            <i class="fas fa-comments fa-3x" style="color:white; text-shadow: 2px 6px 2px black;"></i>
                         </div>
-                        <div class="col-8">
-                            <h4 class="card-title"> <b>Commentaires</b></h4>
+                        <div class="col-9">
+                            <h4 class="card-title" style="color:white; text-shadow: 2px 6px 2px black; font-size: 1.8em;"><b><span class="border-dark rounded-circle p-3 bg-dark">{{ stats.commentRealTotal }}</span> COMMENTAIRES PUBLIES</b></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+     <div class="col-6">
+            <div class="card text-white bg-warning mb-3 text-center">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <i class="fas fa-check fa-3x" style="color:white; text-shadow: 2px 6px 2px black;"></i>
+                        </div>
+                        <div class="col-9">
+                            <h4 class="card-title" style="color:white; text-shadow: 2px 6px 2px black; font-size: 1.8em;"><b><span class="border-dark rounded-circle p-3 bg-dark">{{ stats.waitingComment }}</span> COMMENTAIRES EN ATTENTE</b></h4>
                         </div>
                     </div>
                 </div>
@@ -64,91 +65,61 @@
     </div>
     <div class="row">
         <div class="col">
-            <div class="alert alert-success">
-                <h2 class="alert-heading my-3"><i class="fas fa-arrow-up"></i> Les principaux contributeurs (articles)</h2>
+            <div class="alert bg-success text-light">
+                <h2 class="alert-heading my-3" style="color:yellow; text-shadow: 2px 6px 2px black; font-size: 2em;"><i class="fas fa-trophy"></i><strong> ARTICLES LES PLUS POPULAIRES</strong></h2>
                 <table class="table table-hover text-white">
                     <thead>
                         <tr>
-                            <th>Pseudo</th>
-                            <th>Articles</th>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">#</th>
+                            <th style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">TITRE</th>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">NOTE</th>
                         </tr>
                     </thead>
                     <tbody>
-                   
+                        {% for article in bestArticles %}
                         <tr>
-                            <td></td>
-                            <td>
-                                <img src="" alt="" class="avatar avatar-micro"> 
-                            </td>
+                            <td class="text-center"><strong>{{article.id}}</strong></td>
+                            <td><strong>{{article.title |slice(0,170)|raw}}</strong></td>
+                           
                             <td class="text-center">
-                                <span class="badge badge-dark">
+                                <span class="badge badge-warning" style="font-size: 1.3em;">
+                                    {{article.note | number_format(1, ",", " ")}}
                                     
                                 </span>
                             </td>
                         </tr>
+                         {% endfor %}
                    
                     </tbody>
                 </table>
             </div>
-        </div>
+        
+        <div class="row">
         <div class="col">
-            <div class="row">
-        <div class="col">
-            <div class="alert alert-danger">
-                <h2 class="alert-heading my-3"><i class="fas fa-arrow-up"></i> Les principaux contributeurs (commentaires)</h2>
+            <div class="alert bg-danger text-light">
+                <h2 class="alert-heading my-3" style="color:yellow; text-shadow: 2px 6px 2px black; font-size: 2em;"><i class="fas fa-arrow-circle-down"></i><strong> ARTICLES LES MOINS POPULAIRES</strong></h2>
                 <table class="table table-hover text-white">
                     <thead>
                         <tr>
-                            <th>Pseudo</th>
-                            <th>Commentaires</th>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">#</th>
+                            <th style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">TITRE</th>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">NOTE</th>
                         </tr>
                     </thead>
                     <tbody>
-                   
+                        {% for article in worstArticles %}
                         <tr>
-                            <td></td>
-                            <td>
-                                <img src="" alt="" class="avatar avatar-micro"> 
-                            </td>
+                            <td class="text-center"><strong>{{article.id}}</strong></td>
+                            <td><strong>{{article.title |slice(0,170)|raw}}</strong></td>
+                           
                             <td class="text-center">
-                                <span class="badge badge-dark">
-                                   
-                                </span>
-                            </td>
-                        </tr>
-                    
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        </div>
-    </div>
-</div>
-     <div class="row">
-        <div class="col">
-            <div class="alert alert-success">
-                <h2 class="alert-heading my-3"><i class="fas fa-arrow-up"></i> Les catégories les plus populaires</h2>
-                <table class="table table-hover text-white">
-                    <thead>
-                        <tr>
-                            <th>Categories</th>
-                            <th>Articles</th>
-                            <th>Commentaires</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                   
-                        <tr>
-                            <td></td>
-                            <td>
-                                <img src="" alt="" class="avatar avatar-micro"> 
-                            </td>
-                            <td class="text-center">
-                                <span class="badge badge-dark">
+                                <span class="badge badge-warning" style="font-size: 1.3em;">
+                                    {{article.note | number_format(1, ",", " ")}}
                                     
                                 </span>
                             </td>
                         </tr>
+                         {% endfor %}
                    
                     </tbody>
                 </table>

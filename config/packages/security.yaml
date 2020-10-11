@@ -21,6 +21,7 @@ security:
             form_login:
                 login_path: admin_account_login
                 check_path: admin_account_login
+                default_target_path: admin_article
             logout: 
                 path: admin_account_logout
                 target: main
@@ -50,5 +51,7 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         # - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    # role_hierarchy:
-    #    ROLE_ADMIN: ROLE_USER    # profils utilisateurs
+    role_hierarchy:
+       ROLE_EDITOR: ROLE_USER    # profils utilisateurs
+       ROLE_ADMIN: ROLE_EDITOR
+    

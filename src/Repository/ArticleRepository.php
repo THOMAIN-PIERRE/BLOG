@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Article;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Data\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +19,57 @@ class ArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Article::class);
     }
+
+
+    /**
+    * Récupère les articless en lien avec une recherche par catégorie
+    * @return Article[] Returns an array of Article objects
+    *
+    */
+    public function findSearch(SearchData $search): array
+    {
+        $query = $this
+            ->createQueryBuilder('a')
+            ->select('c', 'a')
+            ->join('a.category', 'c');
+
+            if(!empty($search->q)) {
+                $query = $query
+                    ->andWhere('a.title LIKE :q')
+                    ->setParameter('q', "%{$search->q}%");
+                    // dump($query);
+                    // die();
+            }
+
+            // if(!empty($search->min)) {
+            //     $query = $query
+            //         ->andWhere('a.comments.rating LIKE :min')
+            //         ->setParameter('min', "%{$search->min}%");
+            // }
+
+            // if(!empty($search->max)) {
+            //     $query = $query
+            //         ->andWhere('a.comments.rating LIKE :max')
+            //         ->setParameter('max', "%{$search->max}%");
+            // }
+
+            // if(!empty($search->promo)) {
+            //     $query = $query
+            //         ->andWhere('p.promo = 1');
+            // }
+
+            if(!empty($search->categories)) {
+                $query = $query
+                    ->andWhere('c.id IN (:categories)')
+                    ->setParameter('categories', $search->categories);
+            }
+
+
+
+        return $query->getQuery()->getResult();
+    }
+   
+
 
     // /**
     //  * @return Article[] Returns an array of Article objects

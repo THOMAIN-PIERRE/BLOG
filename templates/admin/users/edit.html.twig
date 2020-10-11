@@ -1,0 +1,28 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}EDITION D'UN UTILISATEUR{% endblock %}
+
+{% block body %}
+
+<div class="container col-7 mt-5 mb-4">
+    <h1 class="mb-4 text-center">MODIFIER UN UTILISATEUR</h1>
+
+    {{form_start(form)}}
+    
+
+    <div class="mt-4 row-10">
+       
+            <div class="card-body alert alert-secondary">
+             {{ form_widget(form) }}
+            <button type="submit" class="btn btn-success mt-3 mb-5 center-block"><a href=""></a><i class="fa fa-check" aria-hidden="true"></i> <b>Valider</b></a></button>
+
+    </div>
+       
+ 
+    
+
+   
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

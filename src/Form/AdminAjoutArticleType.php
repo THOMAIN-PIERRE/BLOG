@@ -28,11 +28,19 @@ class AdminAjoutArticleType extends AbstractType
         $builder
             ->add('title', TextType::class, $this->getConfiguration("Titre", "Saisissez le titre de l'article"))
             ->add('category', EntityType::class, [
+                'label' => 'Catégorie',
                 'class' => Category::class,
                 'choice_label' => 'title'
                 ])  
+            ->add('content', TextareaType::class, [
+                'label' => 'Texte de l\'article',
+                'attr' => [
+                    'label' => 'Titre',
+                    'rows' => '14',
+                    'cols' =>  '20'
+                    ]
+                ], $this->getConfiguration("Contenu de l'article", "Saisissez le titre de l'article"))
             ->add('image', UrlType::class)
-            ->add('content', TextareaType::class, $this->getConfiguration("Contenu", "Saisissez votre article"))
         ;
     }
 

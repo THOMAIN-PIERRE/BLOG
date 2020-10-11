@@ -1,0 +1,55 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion du carousel{% endblock %}
+
+{% block body %}
+    <div class="admin-page {{ app.user.adminBgColor }}">
+
+        <div class="container">
+            <div class="row">
+                <div class="col table-responsive mt-5">
+                    {# {% for label, messages in app.flashes %}
+                        <div class="container">
+                            <div class="alert alert-{{ label }}">
+                                {% for message  in messages %}
+                                    <p>{{ message | raw }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %} #}
+                    <a href="{{ path('admin_carousel_create') }}" class="btn btn-primary" style="float: right"><strong>Ajouter</strong></a>
+                    <h2>CONTENU DU CAROUSEL</h2>
+                    <table class="table table-hover mt-3">
+                        <thead class="{{ app.user.adminTableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">Diapo N°</th>
+                                <th class="text-center align-middle">Image</th>
+                                <th class="text-center align-middle">Légende</th>
+                                {# <th class="text-center align-middle" style="width:16%;">Date de publication</th> #}
+                                <th class="text-center align-middle">Actions</th>
+                            </tr>
+                        </thead> 
+                        {% for carousel in pagination.data %}
+                            <tr class="alert alert-info">
+                                <td class="text-center align-middle">{{carousel.id}}</td>
+                                <td class="text-center align-middle" style="width:40%;"><img src="{{ carousel.picture }}" alt="Image du carousel" style="width: 400px; height:200px;" class="img-fluid"></td>
+                                <td class="align-middle">{{ carousel.caption |slice(0,200)|raw }}</td>
+                                {# <td class="text-center align-middle">{{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }}</td> #}
+                                <td class="text-center align-middle">
+                                    <a href="{{ path('admin_carousel_edit', {'id': carousel.id}) }}" class="btn btn-success mr-2 mb-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                    <a href="{{ path('admin_carousel_delete', {'id': carousel.id}) }}" class="btn btn-danger mr-2 mb-2"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <hr>
+                    {% include 'admin/template_parts/pagination.html.twig' with {'route' : 'admin_carousel'} %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+     <footer class="{{ app.user.adminBgColor }}" style="height: 1000px;"></footer>
+ {% endblock %}           
+

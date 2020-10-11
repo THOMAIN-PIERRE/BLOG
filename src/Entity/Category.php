@@ -43,6 +43,8 @@ class Category
     public function __toString()
     {
         return (string) $this->getTitle();
+        // afin que Symfony puisse convertir mes catégories sous forme de chaînes de caractères (si je te demande une catégorie, renvoi simplement le titre (title) de la catégorie).
+        return $this->title;
     }
 
     public function __construct()

@@ -44,6 +44,16 @@ class Comment
      */
     private $utilisateur;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rating;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $status;
+
 
     public function getId(): ?int
     {
@@ -59,6 +69,7 @@ class Comment
     public function __toString()
     {
     return (string) $this->getUtilisateur();
+    return (string) $this->getStatus();
     }
 
     public function getAuthor(): ?string
@@ -120,4 +131,29 @@ class Comment
 
         return $this;
     }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(int $rating): self
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
 }

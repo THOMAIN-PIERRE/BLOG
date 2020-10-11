@@ -3,28 +3,29 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Service\PaginationService;
 use App\Form\AdminAjoutCategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminCategoryController extends AbstractController
 {
     /**
-     *Permet d'avoir accès à la liste des commentaires dans l'administration
+     *Permet d'avoir accès à la liste des categories dans l'administration
      *  
-     * @Route("/admin/category", name="admin_category")
+     * @Route("/admin/category/{page<\d+>?1}", name="admin_category")
      */
-    public function index(CategoryRepository $repo)
-    {
-        $repo = $this->getDoctrine()->getRepository(Category::class);
+    public function index(CategoryRepository $repo, $page, PaginationService $pagination){
 
-        $categories = $repo->findAll();
-
+        $pagination->setEntityClass(Category::class)
+                   ->setPage($page);
+                   
         return $this->render('admin/category/index.html.twig', [
-            'categories' => $categories
+            'pagination' => $pagination
+            
         ]);
     }
 
@@ -50,6 +51,13 @@ class AdminCategoryController extends AbstractController
 
                 $manager->persist($category);
                 $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    "La nouvelle catégorie <strong>{$category->getTitle()} </strong>a été ajoutée !"
+                    );
+        
+                    return $this->redirectToRoute("admin_category");
             }
                         
             return $this->render('admin/category/new.html.twig', [
@@ -76,12 +84,12 @@ class AdminCategoryController extends AbstractController
             $manager->persist($category);
             $manager->flush();
 
-            return $this->redirectToRoute("admin_category");
-
             $this->addFlash(
             'success',
-            "La modification a bien été prise en compte !"
+            "La cétégorie n°<strong>{$category->getId()} </strong> a été modifiée !"
             );
+
+            return $this->redirectToRoute("admin_category");
         }
 
         return $this->render('admin/category/edit.html.twig', [
@@ -99,13 +107,13 @@ class AdminCategoryController extends AbstractController
      * @return Response
      */
     public function delete(Category $category, Request $request, EntityManagerInterface $manager)
-    {
+    {   
         $manager->remove($category);
         $manager->flush();
 
         $this->addFlash(
             'success',
-            "La catégorie a été supprimée avec succès !"
+            "La catégorie <strong>{$category->getTitle()}</strong> a été supprimée avec succès !"
             );
 
         return $this->redirectToRoute('admin_category');

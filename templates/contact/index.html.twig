@@ -12,7 +12,7 @@
 
 {% block body %}
     {% for message in app.flashes('message') %}
-        <div class="alert alert-success" role="alert">
+        <div class="bg-success text-light h-50" style="font-size: 2em;" role="alert">
             {{ message }}
         </div>
     {% endfor %}
@@ -20,9 +20,9 @@
     <div class="container">
     <div class="row">
     <div class="col-md-3">&nbsp;</div>
-		<div class="col-md-5">
-			<div class="bg-light py-3 px-3 mt-5 mb-5">
-                <h1 class="text-center mb-4">Nous contacter</h1>
+		<div class="col-md-6">
+			<div class="alert alert-secondary py-3 px-3 mt-5 mb-5 " id="imgFormContact">
+                <h1 class="text-center mb-4">NOUS CONTACTER</h1>
 
                  {{ form(contactForm) }}
                 </div>

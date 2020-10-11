@@ -29,6 +29,11 @@ class Role
      */
     private $userblog;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $definition;
+
     public function __construct()
     {
         $this->userblog = new ArrayCollection();
@@ -84,6 +89,18 @@ class Role
         if ($this->userblog->contains($userblog)) {
             $this->userblog->removeElement($userblog);
         }
+
+        return $this;
+    }
+
+    public function getDefinition(): ?string
+    {
+        return $this->definition;
+    }
+
+    public function setDefinition(?string $definition): self
+    {
+        $this->definition = $definition;
 
         return $this;
     }

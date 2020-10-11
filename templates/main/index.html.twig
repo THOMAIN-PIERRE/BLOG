@@ -2,36 +2,111 @@
 
 {% block title %}Bienvenue !{% endblock %}
 
-
-
 {% block body %}
-<section class="articles">
+
+{# <div class="
+{% if app.user %}
+{{ app.user.bgColor }}
+{% else %}
+
+{% endif %}
+"> #}
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-3 mt-5">
+            {% include 'main/_filter.html.twig' with {form: form} only %}
+        </div>
+
+
+
+
 {# <a style="color:black; font-size: 1.8rem" class="nav-link ml-3 pull-left-top" href="{{path('admin_account_login')}}"><i class="fa fa-cog" aria-hidden="true"></i></a> #}
-<h1 class="text-center mt-4 mb-4 "><b>FIL D'ACTUALITE</b></h1>
+<h1 class="text-center mt-5 mb-5"><b>FIL D'ACTUALITE</b></h1>
 {# (article>h2{Titre de l'article}+div.metadata{Ecrit le 10/05/2018 dans la catégorie Science}+div.content>img(p>lorem15)*2+A.btn.btn-primary{Lire la suite})*3 #}
 
-{%for article in articles %}
+{# {% for article in pagination.Blog %} #}
 
-<article class="container mb-5" style="min-height: 60vh;">
+        <div class="col-md-9">
+            <div class="container
+
+{% if app.user %}
+{{ app.user.bgColor }}
+{% else %}
+
+{% endif %}
+">
+
+{% for article in pagination.Blog %}
+
     <hr>
-    {# <div class="container style="min-height: 50vh;"> #}
-    <h2><b>{{ article.title }}</b></h2>
-    <h4 class="metadata"><i>Publié le {{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }}</h2></i></h4>
-    <h4 class="metadata"><i>Catégorie : <h2 class="badge badge-primary">{{ article.category.title }}</h2></i></h4>
-    <div class="content">
-        <img src="{{ article.image }}" alt="image" class="float-left img-fluid"  style="width: 600px; height:300px; padding-right: 20px;">
-        {# <p>{{ article.content |slice(0,1800)|raw }}</p> #}
-        <p  style="text-align: justify">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+    {% if article.comments | length > 0 %}
+    {# {% if comment.status is same as ("Validé")  %} #}
+            <div class="float-right mr-2 btn btn-success">
+        {% include 'template_parts/_rating.html.twig' with {'rating' : article.AvgRatings} %}
+         <br>
+         {# {% set commentaires = pagination %} #}
+         {# {% if article.comments.status is same as ("Validé")  %} #}
+    {# <p class="mt-2 mb-1" style="font-size: 1.2em;"><strong>{{ article.comments | length }}</strong> avis</p> #}
+        {# <p class="mt-2 mb-1" style="font-size: 1.2em;">{{ stats.validatedCommentCount }}<strong></strong> avis</p> #}
+        {# {% endif %} #}
+            </div>
+    {% else %}
+         {% if app.user %}
+         {# {{dump(app.user)}} #}
+        <a href="{{ path('main_show', {'id' : article.id}) }})" class="btn btn-success btn-lg float-right ml-2 mr-2" style="color:yellow; text-shadow: 4px 6px 8px black;"><h4><b>Donner mon avis !</b></h4></a> 
+         {% endif %} 
+    {% endif %}
 
-</p>
-        <a href="{{ path('main_show', {'id' : article.id}) }})" class="btn btn-primary btn-lg"><b>Lire l'article dans son intégralité</b></a>
-       
+
+    {# {% if article.comments | length < 1 %}
+   
+    <div class="float-right mr-2 btn btn-success">
+        {% include 'template_parts/_rating.html.twig' with {'rating' : article.AvgRatings} %}
+        <br>
+        <p class="mt-2 mb-1" style="font-size: 1.2em;"><strong>{{ article.comments | length }}</strong> avis</p>  
     </div>
+   
+    {% endif %} #}
+
+
+
+
+
+
+
+    {# {% endif %} #}
+    <h2><b>{{ article.title }}</b></h2>
+    <h4 class="metadata mt-3"><i>Publié le {{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }} par <strong>{{ article.utilisateurs }}</strong>
+    {% if article.updatedAt is not null %}
+    <span style="font-size: 0.8em; color: blue;">- Modifié le {{ article.updatedAt | date ('d/m/Y') }} à {{ article.updatedAt | date ('H:i') }}</span></i></h4>
+    {% else %}
+    
+    {% endif %}
+    <h4 class="metadata mt-3"><i>Catégorie : <h2 class="badge badge-primary" style="font-size: 1em;">{{ article.category.title }}</h2></i></h4>
+    <h4 class="metadata"><i>Contenu libre : <h2 class="badge badge-success text-light" style="font-size: 1em;">{{ ((2000*100) / (article.content | length)) | number_format(0, '.', ',') }}%</h2></i></h4>
+        <div class="content">
+        <img src="{{ article.image }}" alt="image" class="float-left img-fluid mb-2"  style="margin-right: 1rem;">
+        {# <p>{{ article.content |slice(0,1800)|raw }}</p> #}
+        <p  style="text-align: justify">{{ article.content|slice(0,2000)|raw }} .......</p>
+       {% if app.user %}
+        <p style="color: blue; font-size: 1.5em">Il vous reste <b>{{ (100 - ((2000*100) / (article.content | length))) | number_format(0, '.', ',') }}%</b> de cet article à lire ...</p>
+        <a href="{{ path('main_show', {'id' : article.id}) }})" class="btn btn-primary" style="font-size: 1.5em;"><i class="fas fa-eye"></i><b> Lire la suite</b></a>
+        {% else %}
+        <p style="color: red; font-size: 1.5em">Il vous reste <b>{{ (100 - ((2000*100) / (article.content | length))) | number_format(0, '.', ',') }}%</b> de cet article à lire ...</p>
+        {# <a href="{{path('security_login')}}" class="btn btn-danger mt-2" style="font-size: 1.5em;"><b>S'inscrire pour lire la suite <i style="color: yellow;">({{ (100 - ((2000*100) / (article.content | length))) | number_format(0, '.', ',') }}%)</i></b></a> #}
+        <a href="{{path('security_login')}}" class="btn btn-danger" style="font-size: 1.5em;"><b> La suite est réservée aux abonnés !</b></a>
+       {% endif %}
+        </div>
+    {% endfor %}
     {# </div> #}
-</article>
+    <hr>
+    </div>
+</div>
+</div>	
 
+{# {% endfor %} #}
 
-</section>	
-
-{% endfor %}
+{% include 'admin/template_parts/pagination.html.twig' with {'route' : 'main'} %}
+{# </div> #}
 {% endblock %}

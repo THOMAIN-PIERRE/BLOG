@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AdminAccountController extends AbstractController
 {
    /**
-    * Permet d'afficher et de gérer le formulaire de connexion
+    * Permet d'afficher et de gérer le formulaire de connexion à l'administration
     *
     * @Route("/admin/login", name="admin_account_login")
+    * 
     */
     public function login(AuthenticationUtils $utils)
     {
@@ -24,6 +25,7 @@ class AdminAccountController extends AbstractController
             'hasError' => $error !== null,
             'username' => $username
         ]);
+
     }
 
     /**

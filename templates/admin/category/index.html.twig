@@ -3,14 +3,16 @@
 {% block title %}Gestion des commentaires{% endblock %}
 
 {% block body %}
-    <div class="admin-page">
+    <div class="admin-page {{ app.user.adminBgColor }}">
+
         <div class="container">
-            <div class="row mt-5">
-                <div class="col s12">
+            <div class="row">
+                <div class="col s12 mt-5">
                     <a href="{{ path('admin_category_create') }}" class="btn btn-primary" style="float: right"><strong>Ajouter</strong></a>
-                    <h2>Liste des categories d'articles</h2>
+                    <h2>LISTE DES CATEGORIES D'ARTICLES</h2>
                     <table class="table table-hover mt-3">
-                        <thead class="thead-dark">
+                        <thead class="{{ app.user.tableColor }} text-white">
+
                             <tr>
                                 <th class="text-center align-middle">#</th>
                                 <th class="text-center align-middle">Titre</th>
@@ -19,7 +21,7 @@
                             </tr>
                         <thead>
                         {# {% set i = 1 %} #}
-                        {% for category in categories %}
+                        {% for category in pagination.data %}
                                 <tr>
                                     <td class="text-center align-middle">{{category.id}}</td>
                                     <td class="text-center align-middle"><b>{{category.title}}</b></td>
@@ -32,8 +34,11 @@
                             {# {% set i = i+1 %} #}
                         {% endfor %}
                     </table>
+                    <hr>
+                     {% include 'admin/template_parts/pagination.html.twig' with {'route' : 'admin_category'} %}
                 </div>
             </div>
         </div>
     </div>
+     <footer class="{{ app.user.bgColor }}" style="height: 1000px;"></footer>
  {% endblock %}  

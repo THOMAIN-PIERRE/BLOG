@@ -1,28 +1,76 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-	<div>
-	<i class="fas fa-dashboard"></i>
-		{# <img src="{{asset ('assets/img/palmtree-silhouette.svg')}}" class="img-responsive" alt="logo" width="66px;"> #}
-		<h3 class="font-weight-bold text-light align-middle text-center ml-3 mr-3">.blog <br> Administration</h3>
-	</div>
+{# <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"> #}
 
-	<div class="collapse navbar-collapse align-items-center" id="navbarColor01">
+	<nav class = "navbar navbar-expand-lg navbar-dark 
+	
+	{% if app.user %}
+        {{ app.user.adminNavColor }} 
+         {% else %}
+        bg-dark
+         {% endif %}
+	
+	 sticky-top text-center">
+	
+  	{# <a class="navbar-brand bg-light p-0" href="{{ path('main') }}"><img src="https://i.pinimg.com/originals/81/df/6f/81df6f996acb7f4db9a1c55c0369a982.png" alt="logo Blog" class="logo-mini img-fluid"></a>
+  	<button class="navbar-toggler" style="font-size: 2rem" type="button" data-toggle="collapse" data-target="# navbarColor01" aria-controls="navbarColor01" aria-extended="false" aria-label="Basculer la navigation ">
+    <span class = "navbar-toggler-icon"> </span>
+  	</button> #}
+
+	{# <a href="{{ path('main') }}" target="_blank" class="navbar-brand bg-light p-0"><img src="https://i.pinimg.com/originals/81/df/6f/81df6f996acb7f4db9a1c55c0369a982.png" alt="logo Blog" class="logo-mini img-fluid"></a>
+    <button style="font-size: 2rem" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button> #}
+<div class="mt-4 mb-4">
+<ul>
+	<li class="nav-item dropdown">
+	<button style="font-size: 2rem" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon float-right"></span>
+    </button>
+                    <a href="#" id="accountDropdownLink" class="nav-link dropdown-toggle text-white font-weight-bold ml-3 float-right border" data-toggle="dropdown" id="acccountDropdownLink"><i class="fas fa-home fa-2x" style="color: Yellow;" aria-hidden="true"></i><b><span style="color: Yellow;"> .BLOG</span></b></a>
+                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
+                	<a href="{{ path('main') }}" target="_blank" class="dropdown-item p-3" style="background-color: blue; color: white;"><i class="fab fa-internet-explorer"></i><b> Retour au site</b></a>	
+                </div>
+            </li>
+			{# <button style="font-size: 2rem" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon float-right"></span>
+    </button> #}
+</ul>
+</div>
+
+
+
+
+	{# <div>
+	<i class="fas fa-dashboard"></i>
+		<img src="{{asset ('assets/img/palmtree-silhouette.svg')}}" class="img-responsive" alt="logo" width="66px;">
+		<h3 class="font-weight-bold text-light align-middle text-center ml-3 mr-3">.blog <br> Administration</h3>
+	</div> #}
+
+	<div class="collapse navbar-collapse align-items-center mt-4 mb-4" id="navbarColor01">
 		<ul
 			class="navbar-nav mr-auto">
 			{# <li class="nav-item active">
 			        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
 			      </li> #}
 			<li class="nav-item">
-				<a class="nav-link text-white font-weight-bold ml-3" href="{{ path('admin_dashboard') }}"><i class="fas fa-cog fa-2x" aria-hidden="true"></i> Tableau de bord</a>
+				<a class="nav-link text-white font-weight-bold ml-3" href="{{ path('admin_dashboard') }}"><i class="fas fa-tachometer-alt fa-2x" aria-hidden="true"></i> Tableau de bord</a>
 				{# <a class="nav-link text-white font-weight-bold ml-5 mr-4" href="{{ path('about') }}"><img src="{{asset ('assets/img/Clue_Calico_Jack_pirate_logo (1).svg')}}" class="img-responsive" alt="logo" width="60px;">Qui sommes-nous?</a> #}
 			</li>
 			<li class="nav-item">
 				<a class="nav-link text-white font-weight-bold ml-3" href="{{ path('admin_article') }}"><i class="fa fa-th-list fa-2x" aria-hidden="true"></i> Articles</a>
 				{# <a class="nav-link text-white font-weight-bold ml-5 mr-4" href="{{ path('about') }}"><img src="{{asset ('assets/img/Clue_Calico_Jack_pirate_logo (1).svg')}}" class="img-responsive" alt="logo" width="60px;">Qui sommes-nous?</a> #}
 			</li>
-			<li class="nav-item">
+
+			<li class="nav-item dropdown">
+                    <a href="#" id="accountDropdownLink" class="nav-link dropdown-toggle text-white font-weight-bold ml-3" data-toggle="dropdown" id="acccountDropdownLink"><i class="fa fa-comment fa-2x" aria-hidden="true"></i> Commentaires</a>
+                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
+                	<a href="{{ path('admin_comment') }}" class="dropdown-item p-3" style="background-color: green; color: white;"><i class="fas fa-edit"></i><b> Commentaires publiés</b></a>
+					<a href="{{ path('admin_comment_toValidate') }}" class="dropdown-item p-3" style="background-color: orange; color: white;"><i class="fas fa-check"></i><b> Commentaires à valider</b></a>
+                </div>
+            </li>
+
+			{# <li class="nav-item">
 				<a class="nav-link text-white font-weight-bold ml-3" href="{{ path('admin_comment') }}"><i class="fa fa-comment fa-2x" aria-hidden="true"></i> Commentaires</a>
-				{# <a class="nav-link text-white font-weight-bold" href="{{ path('basket') }}"><img src="{{asset ('assets/img/treasure.svg')}}" class="img-responsive" alt="logo" width="51px;"> Mon Panier</a> #}
-			</li>
+			</li> #}
 			<li class="nav-item">
 				<a class="nav-link text-white font-weight-bold ml-3" href="{{ path('admin_category') }}"><i class="fa fa-th-large fa-2x" aria-hidden="true"></i> Catégories</a>
 				{# <a class="nav-link text-white font-weight-bold" href="{{ path('basket') }}"><img src="{{asset ('assets/img/treasure.svg')}}" class="img-responsive" alt="logo" width="51px;"> Mon Panier</a> #}
@@ -32,31 +80,34 @@
 				{# <a class="nav-link text-white font-weight-bold mr-4" href="{{ path('profile') }}"> <img src="{{asset ('assets/img/silhouette_pirate.svg')}}" class="img-responsive" alt="logo" width="33px;">Mon Compte</a> #}
 			</li>
 			<li class="nav-item">
-				<a class="nav-link text-white font-weight-bold ml-3" href=""><i class="fas fa-user-plus fa-2x"></i> Rôles</a>
+				<a class="nav-link text-white font-weight-bold ml-3" href="{{ path('admin_role') }}"><i class="fas fa-user-plus fa-2x"></i> Rôles</a>
 				{# <a class="nav-link text-white font-weight-bold mr-4" href="{{ path('profile') }}"> <img src="{{asset ('assets/img/silhouette_pirate.svg')}}" class="img-responsive" alt="logo" width="33px;">Mon Compte</a> #}
 			</li>
-		</ul>
-
-		<div>
-			<ul classs="navbar-nav ml-auto" style="list-style: none">
 			<li class="nav-item">
-				<a href="{{ path('main') }}" target="_blank" class="nav-link badge badge-primary" style="color: white;"><img src="https://i.pinimg.com/originals/81/df/6f/81df6f996acb7f4db9a1c55c0369a982.png" alt="logo Blog" class="logo-mini" style="width: 180px; height:100px;"></a>
+				<a class="nav-link text-white font-weight-bold ml-3" href="{{ path('admin_carousel') }}"><i class="fas fa-image fa-2x"></i> Carousel</a>
+				{# <a class="nav-link text-white font-weight-bold mr-4" href="{{ path('profile') }}"> <img src="{{asset ('assets/img/silhouette_pirate.svg')}}" class="img-responsive" alt="logo" width="33px;">Mon Compte</a> #}
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-white font-weight-bold ml-3" href="{{ path('admin_customizer') }}"><i class="fas fa-cog fa-2x"></i> Réglages</a>
+			</li>
+		{# </ul> #}
 
+		{# <ul> #}
 			</li>
 			{% if app.user %}
-                    <li class="nav-item dropdown mt-2">
-                        <a href="#" id="accountDropdownLink" class="nav-link dropdown-toggle" data-toggle="dropdown" id="acccountDropdownLink" style="color: white; font-size: 1.3rem">
-							<img src="https://img2.freepng.fr/20180615/rtc/kisspng-avatar-user-profile-male-logo-profile-icon-5b238cb002ed52.870627731529056432012.jpg" style="max-width:35px; max-height:35px; border-radius:50%"> {{app.user.username}}
+                    <li class="nav-item dropdown border ml-1">
+                        <a href="#" id="accountDropdownLink" class="nav-link dropdown-toggle" data-toggle="dropdown" id="acccountDropdownLink" style="color: yellow; font-size: 1.1rem">
+							<img src="{{app.user.avatar}}" style="max-width:40px; border-radius:50%"> <b>{{app.user.username}}</b>
                             {# <img src="" class="avatar avatar-mini">{{app.user.username}} #}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
-                            <a href="{{ path('admin_account_logout') }}" class="dropdown-item">Déconnexion</a>
+                            <a href="{{ path('admin_account_logout') }}" class="dropdown-item p-3" style="background-color: red; color: white;"><i class="fas fa-power-off"><b> Déconnexion<b></i></a>
                         </div>
                     </li>
                 {% endif %}
-			</ul>
-		</div>
-
+			</li>
+		</ul>
+	</div>
 
 		{# <form class="form-inline my-2 my-lg-0"> #}
 	{# <input class="form-control mr-sm-2" type="text" placeholder="Search"> #}

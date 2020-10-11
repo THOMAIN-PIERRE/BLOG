@@ -3,36 +3,54 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\AdminProduitType;
+use App\Service\PaginationService;
 use App\Form\AdminAjoutArticleType;
 use App\Form\AdminAjoutProduitType;
-use App\Form\AdminProduitType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminArticleController extends AbstractController
 {
     /**
-     *Permet d'avoir accès à la liste des produits dans l'administration
+     *Permet d'avoir accès à la liste des articles dans l'administration
      *  
-     * @Route("/admin/article", name="admin_article")
+     * @Route("/admin/article/{page<\d+>?1}", name="admin_article")
      */
-    public function index(ArticleRepository $repo)
-    {
-        $repo = $this->getDoctrine()->getRepository(Article::class);
+    public function index(ArticleRepository $repo, $page, PaginationService $pagination){
 
-        $articles = $repo->findAll();
-
+        $pagination->setEntityClass(Article::class)
+                   ->setPage($page);
+                   
         return $this->render('admin/article/index.html.twig', [
-            'articles' => $articles
+            'pagination' => $pagination
+            
         ]);
     }
 
+    // /**
+    //  *Permet d'avoir accès à la liste des articles parlant d'économie dans l'administration
+    //  *  
+    //  * @Route("/admin/article/{page<\d+>?1}", name="admin_article")
+    //  */
+    // public function EconomyArticles(ArticleRepository $repo, $page, PaginationService $pagination){
+
+    //     $pagination->setEntityClass(Article::class)
+    //                ->setPage($page);
+                   
+    //     return $this->render('admin/article/index.html.twig', [
+    //         'pagination' => $pagination
+            
+    //     ]);
+    // }
+
 
      /**
-     *Permet d'afficher le formulaire de création d'articles dans l'administration
+     * Permet d'afficher le formulaire de création d'articles dans l'administration
      * 
      * @Route("/admin/article/new", name="admin_article_create")
      * 
@@ -56,6 +74,13 @@ class AdminArticleController extends AbstractController
 
                 $manager->persist($article);
                 $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    "L'article intitulé <strong>{$article->getTitle()}</strong> a été créé !"
+                    );
+        
+                    return $this->redirectToRoute("admin_article");
             }
                         
             return $this->render('admin/article/new.html.twig', [
@@ -80,18 +105,21 @@ class AdminArticleController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $article->setCreatedAt(new \DateTime());
+            // $article->setCreatedAt(new \DateTime());
             $article->setUtilisateurs($user);
+            $article->setUpdatedAt(new \DateTime());
+            
+
 
             $manager->persist($article);
             $manager->flush();
 
-            return $this->redirectToRoute("admin_article");
-
             $this->addFlash(
             'success',
-            "L'article a bien été modifié !"
+            "L'article intitulé <strong>{$article->getTitle()}</strong> a été modifié !"
             );
+
+            return $this->redirectToRoute("admin_article");
         }
 
         return $this->render('admin/article/edit.html.twig', [
@@ -115,7 +143,7 @@ class AdminArticleController extends AbstractController
 
         $this->addFlash(
             'success',
-            "L'article sélectionné a été supprimé !"
+            "L'article intitulé <strong>{$article->getTitle()}</strong> a été supprimé !"
             );
 
         return $this->redirectToRoute('admin_article');

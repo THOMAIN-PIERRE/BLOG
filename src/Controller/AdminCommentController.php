@@ -4,37 +4,55 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Service\PaginationService;
 use App\Form\AdminAjoutCommentType;
 use App\Repository\CommentRepository;
+use App\Service\StatsService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminCommentController extends AbstractController
 {
+   /**
+     *Permet d'avoir accès à la liste des commentaires validés dans l'administration
+     *  
+     * @Route("/admin/comment/{page<\d+>?1}", name="admin_comment")
+     */
+    public function index(CommentRepository $repo, $page, PaginationService $pagination, StatsService $statsService){
+        
+        $pagination->setEntityClass(Comment::class)
+                   ->setPage($page);
 
-
+        $stats = $statsService->getStats();
+                   
+        return $this->render('admin/comment/index.html.twig', [
+            'pagination' => $pagination,
+            'stats' => $stats,
+            
+        ]);
+    }
 
     /**
-     *Permet d'avoir accès à la liste des commentaires dans l'administration
+     *Permet d'avoir accès à la liste des commentaires à valider dans l'administration
      *  
-     * @Route("/admin/comment", name="admin_comment")
+     * @Route("/admin/comment/{page<\d+>?1}/toValidate", name="admin_comment_toValidate")
      */
-    public function index(CommentRepository $repo)
-    {
-        $repo = $this->getDoctrine()->getRepository(Comment::class);
+    public function index2(CommentRepository $repo, $page, PaginationService $pagination){
 
-        $comments = $repo->findAll();
-
-        return $this->render('admin/comment/index.html.twig', [
-            'comments' => $comments
+        $pagination->setEntityClass(Comment::class)
+                   ->setPage($page);
+                   
+        return $this->render('admin/comment/indexToValidate.html.twig', [
+            'pagination' => $pagination,
+            
         ]);
     }
 
 
      /**
-     *Permet d'afficher le formulaire de création d'articles dans l'administration
+     *Permet d'afficher le formulaire de création de commentaire dans l'administration
      * 
      * @Route("/admin/comment/new", name="admin_comment_create")
      * 
@@ -59,6 +77,13 @@ class AdminCommentController extends AbstractController
 
                 $manager->persist($comment);
                 $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    "Un nouveau commentaire à été publié !"
+                    );
+        
+                    return $this->redirectToRoute("admin_comment");
             }
                         
             return $this->render('admin/comment/new.html.twig', [
@@ -74,7 +99,7 @@ class AdminCommentController extends AbstractController
      * @param Comment $comment
      * @return Response
      */
-    public function edit(Comment $comment, Request $request, EntityManagerInterface $manager)
+    public function editPublishedComments(Comment $comment, Request $request, EntityManagerInterface $manager)
     {
         $user = $this->getUser();
 
@@ -83,19 +108,19 @@ class AdminCommentController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $comment->setAuthor($this->getUser());
-            $comment->setCreatedAt(new \DateTime());
-            $comment->setUtilisateur($user);
+            // $comment->setAuthor($this->getUser());
+            //$comment->setCreatedAt(new \DateTime());
+            // $comment->setUtilisateur($user);
 
             $manager->persist($comment);
             $manager->flush();
 
-            return $this->redirectToRoute("admin_comment");
-
             $this->addFlash(
             'success',
-            "Le commentaire a bien été modifié !"
+            "Le commentaire n°<strong>{$comment->getId()} </strong> a été modifié !"
             );
+
+            return $this->redirectToRoute("admin_comment");
         }
 
         return $this->render('admin/comment/edit.html.twig', [

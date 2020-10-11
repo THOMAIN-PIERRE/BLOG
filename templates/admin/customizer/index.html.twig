@@ -1,0 +1,111 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion de l'administration{% endblock %}
+
+{% block body %}
+    <div class="admin-page {{ app.user.adminBgColor }}">
+
+        <div class="container">
+            <div class="row">
+                <div class="col s12 table-responsive mt-5">
+                    {# <a href="{{ path('admin_users_create') }}" class="btn btn-primary" style="float: right"><strong>Ajouter</strong></a> #}
+                    <h2>PARAMETRES DE STYLE DE L'ADMINISTRATION</h2>
+
+                        <div class="row">
+                        <table class="table col-3 mt-5 border">
+                        <thead class="{{ app.user.adminTableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">Couleur de la barre de navigation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center align-middle" style="font-size: 1.5em;">{{ app.user.adminNavColor }}</td> 
+                            </tr>
+                            <tr>
+                                <td class="text-center align-middle alert alert-success"><a href="{{ path('admin_customizer_edit', {'id': app.user.id}) }}" class="btn btn-success"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+
+
+                        <table class="table col-3 ml-4 mt-5 border">
+                        <thead class="{{ app.user.adminTableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">Couleur d'entete des tableaux</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center align-middle" style="font-size: 1.5em;">{{ app.user.adminTableColor }}</td> 
+                            </tr>
+                            <tr>
+                                <td class="text-center align-middle alert alert-success"><a href="{{ path('admin_customizer_edit', {'id': app.user.id}) }}" class="btn btn-success"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+
+
+                        <table class="table col-3 ml-4 mt-5 border">
+                        <thead class="{{ app.user.adminTableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">Couleur de fond d'écran</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center align-middle" style="font-size: 1.5em;">{{ app.user.adminBgColor }}</td> 
+                            </tr>
+                            <tr>
+                                <td class="text-center align-middle alert alert-success"><a href="{{ path('admin_customizer_edit', {'id': app.user.id}) }}" class="btn btn-success"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+
+
+                        <table class="table col-2 ml-4 mt-5 border">
+                        <thead class="{{ app.user.adminTableColor }} text-white">
+{# 
+                            <tr>
+                                <th class="text-center align-middle">Nombre d'articles / page</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center align-middle" style="font-size: 1.5em;">{{ app.user.nbArticlePerPage }}</td> 
+                            </tr>
+                            <tr>
+                                <td class="text-center align-middle alert alert-success"><a href="{{ path('admin_customizer_edit', {'id': app.user.id}) }}" class="btn btn-success"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+
+
+                        <table class="table col-2 ml-4 mt-5 border">
+                        <thead class="{{ app.user.adminTableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">Nombre de commentaires / page</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center align-middle" style="font-size: 1.5em;">{{ app.user.nbCommentPerPage }}</td> 
+                            </tr>
+                            <tr>
+                                <td class="text-center align-middle alert alert-success"><a href="{{ path('admin_customizer_edit', {'id': app.user.id}) }}" class="btn btn-success"><i class="fas fa-edit" aria-hidden="true"></i></a></td>
+                            </tr>
+
+                        </table> #}
+
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </tbody>
+    <footer class="{{ app.user.adminBgColor }}" style="height: 1000px;"></footer>
+ {% endblock %}  

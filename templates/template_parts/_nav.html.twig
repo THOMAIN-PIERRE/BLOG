@@ -1,11 +1,23 @@
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark
+
+         {% if app.user %}
+        {{ app.user.navColor }} 
+         {% else %}
+        bg-primary
+         {% endif %}
+
+        sticky-top" id="navMenuMobile">
 			{# <a class="navbar-brand pull-right-top" href="#"><i class="fa fa-cogs" aria-hidden="true"></i> #}
             {# <div class="pull-left-top"><i class="fa fa-cog fa-2x" aria-hidden="true"></i></div> #}
             <a class="navbar-brand" href="{{ path('home') }}"><img src="https://i.pinimg.com/originals/81/df/6f/81df6f996acb7f4db9a1c55c0369a982.png" alt="logo Blog" class="logo-mini"></a>
-            <button style="color:white; font-size: 1.8rem" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            {# <button style="font-size: 2rem; background-color: white;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="font-size: 2rem; background-color: black;"></span>
+            </button> #}
+
+            <button style="font-size: 2rem" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon float-right"></span>
+    </button>
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
@@ -16,8 +28,9 @@
                     <li class="nav-item">
                         <a style="color:white; font-size: 1.8rem" class="nav-link ml-3" href="{{path('main')}}">Fil d'actualité</a>
                     </li>
-					
+                    {% if is_granted('ROLE_EDITOR') %}
                         <a style="color:white; font-size: 1.8rem" class="nav-link ml-3" href="{{path('main_create')}}">Publier</a>
+                    {% endif %}
                     </li>
 
 					 <li class="nav-item">
@@ -30,14 +43,21 @@
                 {% if app.user %}
                     <li class="nav-item dropdown">
                         <a href="#" id="accountDropdownLink" class="nav-link dropdown-toggle" data-toggle="dropdown" style="color: white; font-size: 1.3rem">
-                            <img src="https://img2.freepng.fr/20180615/rtc/kisspng-avatar-user-profile-male-logo-profile-icon-5b238cb002ed52.870627731529056432012.jpg" style="max-width:35px; max-height:35px; border-radius:50%"> {{app.user.username}} 
+                            <img src="{{app.user.avatar}}" style="max-width:55px; border-radius:50%"> {{app.user.username}} 
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
-                            <a href="{{path('account_index')}}" class="dropdown-item"><i class="fas fa-user-circle"></i> Mon compte</a>
-                            <a href="{{path('account_publications')}}" class="dropdown-item"><i class="fa fa-th-list" aria-hidden="true"></i> Mes articles</a>
-                            <a href="{{path('account_commentaires')}}" class="dropdown-item"><i class="fa fa-comment" aria-hidden="true"></i> Mes commentaires</a>
-							<div class="dropdown-divider"></div> 
-                            <a href="{{path('security_logout')}}" class="dropdown-item"><i class="fas fa-power-off"></i> Deconnexion</a>
+                            <a href="{{path('account_index')}}" class="dropdown-item p-3 text-left" style="background-color: #ADD8E6;"><i class="fas fa-user-circle"></i> <b>Mon compte</b></a>
+                            {% if is_granted('ROLE_EDITOR') %}
+                            <a href="{{path('account_publications')}}" class="dropdown-item p-3 text-left" style="background-color: #ffcccb;"><i class="fa fa-th-list" aria-hidden="true"></i> <b>Mes articles</b></a>
+                            {% endif %}
+                            <a href="{{path('account_commentaires')}}" class="dropdown-item p-3 text-left" style="background-color: #ADD8E6;"><i class="fa fa-comment" aria-hidden="true"></i> <b>Mes commentaires</b></a>
+                             <a href="{{path('customizer')}}" class="dropdown-item p-3 text-left" style="background-color: #ffcccb;"><i class="fas fa-cog" aria-hidden="true"></i> <b>Mes réglages</b></a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{path('admin_account_login')}}" class="dropdown-item p-3 text-left" style="background-color: #343A40; color: yellow"><i class="fas fa-tools"></i> <b>Administration</b></a>
+                            {% endif %}
+                            {# <div class="dropdown-divider"></div>  #}
+                            <a href="{{path('security_logout')}}" class="dropdown-item p-3 text-left" style="background-color: red; color: white"><i class="fas fa-power-off"></i> <b>Déconnexion</b></a>
+                            
                         </div>
                     </li>
                 {% else %}
@@ -45,7 +65,7 @@
                         <a href="{{path('security_registration')}}" class="nav-link" style="color:white; font-size: 1.3rem">Inscription</a>
                     </li> #}
                     <li class="nav-item">
-                        <a href="{{path('security_login')}}" class="nav-link" style="color:white; font-size: 1.3rem">Connexion</a>
+                        <a href="{{path('security_login')}}" class="nav-link" style="color:white; font-size: 1.8rem;"> Connexion</a>
                     </li>
                 {% endif %}
                 </ul>

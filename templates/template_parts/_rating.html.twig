@@ -1,0 +1,11 @@
+<span class="rating">
+        {% for i in 1..5 %}
+            {% if i <= rating %}
+                <i class="fas fa-star fa-2x" style="color:yellow; text-shadow: 6px 8px 8px black;"></i>
+            {% else %}
+                <i class="far fa-star fa-2x" style="color:yellow; text-shadow: 6px 8px 8px black;"></i>
+            {% endif %}
+        {% endfor %} 
+    </span>   
+
+    

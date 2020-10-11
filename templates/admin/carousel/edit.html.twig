@@ -1,0 +1,28 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}EDITION DU CAROUSEL{% endblock %}
+
+{% block body %}
+
+<div class="container col-5 mt-5 mb-4">
+    <h1 class="mb-4 text-center">MODIFIER LE CAROUSEL</h1>
+
+    {{form_start(form)}}
+    
+
+    <div class="mt-5 row-10">
+       
+            <div class="card-body alert alert-secondary">
+             {{ form_widget(form) }}
+            <button type="submit" class="btn btn-success mt-3 mb-5 center-block"><a href=""></a><i class="fa fa-check-circle" aria-hidden="true"></i> Ajouter</a></button>
+
+    </div>
+       
+ 
+    
+
+   
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

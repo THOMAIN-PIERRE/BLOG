@@ -40,11 +40,10 @@ class Users implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="8", minMessage="Votre mot de passe doit faire au minimum 8 caractères")
-     * @Assert\EqualTo(propertyPath="confirm_password", message="Vous n'avez pas entré le même mot de passe")
      */
     private $password;
      /**
-     * @Assert\EqualTo(propertyPath="password", message="Vous n'avez pas entré le même mot de passe")
+     * @Assert\EqualTo(propertyPath="password", message="Vous n'avez pas saisi le bon mot de passe")
      */
     public $confirm_password;
 
@@ -62,9 +61,64 @@ class Users implements UserInterface
      * @ORM\ManyToMany(targetEntity=Role::class, mappedBy="userblog")
      */
     private $userRoles;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $rgpd;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $inscriptionDate;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $navColor;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tableColor;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bgColor;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbArticlePerPage;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbCommentPerPage;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adminNavColor;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adminTableColor;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adminBgColor;
+    
+    
     //relation de cet utilisateur avec les différents rôles dans la BDD
-
-
 
     public function __construct()
     {
@@ -84,11 +138,10 @@ class Users implements UserInterface
     {
         return (string) $this->getUsername();
         return (string) $this->getUserRoles();
-
-
+        return (string) $this->getInscriptionDate();
     }
 
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +208,7 @@ class Users implements UserInterface
         // return ['ROLE_USER'];
         
     }
+
 
     /**
      * @return Collection|Comment[]
@@ -226,6 +280,14 @@ class Users implements UserInterface
         return $this->userRoles;
     }
 
+    /**
+     * @return Collection|Role[]
+     */
+    public function setUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
     public function addUserRole(Role $userRole): self
     {
         if (!$this->userRoles->contains($userRole)) {
@@ -246,5 +308,136 @@ class Users implements UserInterface
         return $this;
     }
 
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getRgpd(): ?bool
+    {
+        return $this->rgpd;
+    }
+
+    public function setRgpd(?bool $rgpd): self
+    {
+        $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    public function getInscriptionDate(): ?\DateTimeInterface
+    {
+        return $this->inscriptionDate;
+    }
+
+    public function setInscriptionDate(?\DateTimeInterface $inscriptionDate): self
+    {
+        $this->inscriptionDate = $inscriptionDate;
+
+        return $this;
+    }
+
+    public function getNavColor(): ?string
+    {
+        return $this->navColor;
+    }
+
+    public function setNavColor(?string $navColor): self
+    {
+        $this->navColor = $navColor;
+
+        return $this;
+    }
+
+    public function getTableColor(): ?string
+    {
+        return $this->tableColor;
+    }
+
+    public function setTableColor(?string $tableColor): self
+    {
+        $this->tableColor = $tableColor;
+
+        return $this;
+    }
+
+    public function getBgColor(): ?string
+    {
+        return $this->bgColor;
+    }
+
+    public function setBgColor(?string $bgColor): self
+    {
+        $this->bgColor = $bgColor;
+
+        return $this;
+    }
+
+    public function getNbArticlePerPage(): ?int
+    {
+        return $this->nbArticlePerPage;
+    }
+
+    public function setNbArticlePerPage(?int $nbArticlePerPage): self
+    {
+        $this->nbArticlePerPage = $nbArticlePerPage;
+
+        return $this;
+    }
+
+    public function getNbCommentPerPage(): ?int
+    {
+        return $this->nbCommentPerPage;
+    }
+
+    public function setNbCommentPerPage(?int $nbCommentPerPage): self
+    {
+        $this->nbCommentPerPage = $nbCommentPerPage;
+
+        return $this;
+    }
+
+    public function getAdminNavColor(): ?string
+    {
+        return $this->adminNavColor;
+    }
+
+    public function setAdminNavColor(?string $adminNavColor): self
+    {
+        $this->adminNavColor = $adminNavColor;
+
+        return $this;
+    }
+
+    public function getAdminTableColor(): ?string
+    {
+        return $this->adminTableColor;
+    }
+
+    public function setAdminTableColor(?string $adminTableColor): self
+    {
+        $this->adminTableColor = $adminTableColor;
+
+        return $this;
+    }
+
+    public function getAdminBgColor(): ?string
+    {
+        return $this->adminBgColor;
+    }
+
+    public function setAdminBgColor(?string $adminBgColor): self
+    {
+        $this->adminBgColor = $adminBgColor;
+
+        return $this;
+    }
 
 }

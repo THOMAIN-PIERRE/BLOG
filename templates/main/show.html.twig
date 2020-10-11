@@ -10,37 +10,136 @@
 {# (article>h2{Titre de l'article}+div.metadata{Ecrit le 10/05/2018 dans la catégorie Science}+div.content>img(p>lorem15)*2+A.btn.btn-primary{Lire la suite})*3 #}
 
 
-<article class="container mt-5 mb-5">
+<article class="container mt-5 mb-5 
+
+{% if app.user %}
+{{ app.user.bgColor }}
+{% else %}
+
+{% endif %}
+">
+
+{# <a href="{{path('main')}}" class="btn btn-primary mt-4 mb-5 mr-5 float-xl-none float-right"><i class="fa fa-reply-all" aria-hidden="true"></i> <b>Retour</b></a> #}
+ {% if article.comments | length > 0 %} 
+    <div class="float-right btn btn-success">
+        {% include 'template_parts/_rating.html.twig' with {'rating' : article.AvgRatings} %}
+        <br>
+        <p class="mt-2 mb-1" style="font-size: 1.2em;"><strong>{{ commentaires | length }}</strong> avis</p>
+    </div>
+    {% else %}
+        <a href="#" class="btn btn-success btn-lg float-right ml-2 mr-2" style="color:yellow; text-shadow: 4px 6px 8px black;"><h4><b>Donner mon avis !</b></h4></a></div>  
+    {% endif %}
      <h2><b>{{ article.title }}</b></h2>
-    <h4 class="metadata"><i>Publié le {{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }}</h2></i></h4>
-    <h4 class="metadata"><i>Catégorie : <h2 class="badge badge-primary">{{ article.category.title }}</h2></i></h4>
+    <h4 class="metadata"><i>Publié le {{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }} par <strong>{{ article.utilisateurs }}</strong>
+    {% if article.updatedAt is not null %}
+    <span style="font-size: 0.8em; color: blue;">- Modifié le {{ article.updatedAt | date ('d/m/Y') }} à {{ article.updatedAt | date ('H:i') }}</span></i></h4>
+    {% else %}
+    
+    {% endif %}
+    <h4 class="metadata"><i>Catégorie : <h2 class="badge badge-primary" style="font-size: 1em;">{{ article.category.title }}</h2></i></h4>
     <div class="content">
         <img src="{{ article.image }}" alt="image" class="float-left img-fluid"  style="width: 600px; height:300px; padding-right: 20px;">
         {# <p>{{ article.content |slice(0,1800)|raw }}</p> #}
-        <p  style="text-align: justify">"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+        <p  style="text-align: justify">{{ article.content }}</p>
     {# <a href="" class="btn btn-primary mt-5 mb-4 mr-5 float-xl-none float-right"><i class="fa fa-comment" aria-hidden="true"></i> Ajouter un commentaire</a> #}
-    <a href="{{path('main')}}" class="btn btn-primary mt-4 mb-5 mr-5 float-xl-none float-right"><i class="fa fa-reply-all" aria-hidden="true"></i> <b>Retour au fil d'actualité</b></a>
-    <div class="alert alert-dark mb-4">
-<h2 class="alert-heading mb-3"><i class="fa fa-comment" aria-hidden="true"></i> Réagissez à cet article !</h2>
+    {# <a href="{{path('main')}}" class="btn btn-primary mt-4 mb-5 mr-5 float-xl-none float-right" style="font-size: 1.6em;"><i class="fa fa-reply-all" aria-hidden="true"></i> <b>Retour au fil d'actualité</b></a> #}
+    {# {% set comment = article.comments %} #}
+
+    {% set comment = article.commentFromAuthor(app.user) %}
+    
+    {# {{dump(app.user)}}
+
+    {{dump(comment)}} #}
+   
+    
+    {% if comment is not null %}
+        <div class="container col-8 bg-secondary float-left border border-dark text-light mt-4 mb-4">
+        {# <h2 class="mt-2" style="color:white; text-shadow: 4px 6px 8px black;"><b><img src="{{app.user.avatar}}" style="max-width:45px; border-radius:50%"> VOTRE AVIS :<h4 class="float-right mt-2">{{ comment.createdAt | date ('d/m/Y') }} à {{ comment.createdAt | date ('H:i') }}</h4</b></h2> #}
+        <h2 class="mt-2" style="color:white; text-shadow: 4px 6px 8px black;"><b><img src="{{app.user.avatar}}" style="max-width:45px; border-radius:50%"> Votre avis :<h4 class="float-right mt-2">{{ comment.createdAt | date ('d/m/Y') }} à {{ comment.createdAt | date ('H:i') }}</h4</b></h2>
+        <hr style="border: none; border-bottom: 2px solid #fff;">
+        <blackquote><h4 class="mt-2 mb-4">
+            <i>"{{comment.content}}"</i></h4>
+        </blackquote>
+        <h4 class="py-2" style="color:white; text-shadow: 4px 6px 8px black;"><strong>VOTRE NOTE :</strong> {% include 'template_parts/_rating.html.twig' with {'rating': comment.rating} %}</h4>
+        </div>
+    {% else %}
+    <div class="alert alert-dark mt-5 mb-4">
+<h1 class="alert-heading mb-3"><i class="fa fa-comment" aria-hidden="true"></i> Réagissez à cet article !</h1>
 {{ form_start(commentForm) }}
 {{ form_widget(commentForm) }}
-<button type="submit" class="btn btn-success">Poster !</button>
+<button type="submit" class="btn btn-success"><b>Poster !</b></button>
 {{ form_end(commentForm) }}
 </div>
-    <hr>
+{% endif %}
+
+ <a href="{{path('main')}}" class="btn btn-primary mt-4 mb-3 mr-5 float-xl-none float-right" style="font-size: 1.6em;"><i class="fa fa-reply-all" aria-hidden="true"></i> <b>Retour au fil d'actualité</b></a>
+
+ 
 </article>
-<section id="commentaires">
-{% for comment in article.comments %}
-<div class="comment">
-<div class="row">
-<div class="col-3">
-{{comment.author}} (<small>{{comment.createdAt | date('d/m/Y à H:i')}}</small>)
+{# <hr class="mt-5">
+<hr class="md-5"> #}
+<section class="alert alert-warning" id="commentaires">
+
+{% if article.comments | length > 0 %}
+    {# {% if comment.status is same as ("Validé")  %} #}
+<h2 class="mb-3 text-center text-dark mt-5 mb-5"><strong>COMMENTAIRES DE NOS LECTEURS</strong></h2>
+
+<div class="container col-10 alert bg-primary text-light mb-4">
+    <h1 class="alert-heading text-center">
+        <div class="row align-items-center">
+            <div class="col">
+                <b style="text-shadow: 6px 8px 8px black;">NOTE DE L'ARTICLE</b>
+                
+            </div>
+            <div class="col">
+            <span class="rating mt-2"> 
+                {% include 'template_parts/_rating.html.twig' with {'rating' : article.AvgRatings} %}
+            </span>
+                <br>
+                {# {% for comment in commentaires %} #}
+                <div>
+                    <small>Evaluation sur <strong>{{commentaires | length }}</strong> avis !</small>
+                </div>
+                {# {% endfor %} #}
+            </div>
+        </div>
+    </h1>
 </div>
-<div class="col mb-5">
-{{comment.content | raw}}
+{# {% endif %} #}
+{% else %}
+    <h2 class="m-3 mb-3 text-center"><strong>Commentaires des lecteurs</strong></h2>
+    <div class="container col-7 bg-danger text-light">
+    <h2 class="mt-5 mb-5 text-center p-5"><i>Cette annonce n'a pas encore reçu de commentaire !</i>
+    <br> 
+    </div> 
+{% endif %}
+
+
+{% for comment in commentaires %}
+{# {% if comment.status is same as ("Validé")  %}  #}
+
+<div class="container col-4 alert bg-success text-light rounded mb-3 py-3 px-3">
+    <img src="{{ comment.utilisateur.avatar }}" style="max-width:45px; border-radius:50%">
+    <i>{{ comment.createdAt | date ('d/m/Y') }} à {{ comment.createdAt | date ('H:i') }} par <strong><u>{{ comment.author }}</u></i></strong>
+    <hr style="border: none; border-bottom: 1px solid #fff;">
+    <blockquote class="mt-3">
+        <h5><i>"{{comment.content}}"</i></h5>
+    </blockquote>
+    <strong style="font-size: 1.5em; text-shadow: 6px 6px 4px black;"><i>NOTE DE L'ARTICLE :</i></strong>
+    {% set rating = comment.rating %}
+    {% include 'template_parts/_rating.html.twig' with {'rating' : comment.rating} %}
+
 </div>
-</div>
-</div>
+{# {% endif %} #}
+{# {% else %}
+
+    <h2 class="mb-3 text-center"><strong>Commentaires des lecteurs</strong></h2>
+<div class="container col-7 bg-danger text-light">
+    <h2 class="mt-5 mb-5 text-center p-5"><i>Cette annonce n'a pas encore reçu de commentaire !</i>
+    <br> 
+</div>  #}
 {% endfor %}
+
+
 </section>
 {% endblock %}

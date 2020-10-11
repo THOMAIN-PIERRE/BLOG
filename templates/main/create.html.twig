@@ -25,12 +25,20 @@
 
 {% extends 'base.html.twig' %}
 
-{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+{# {% form_theme formArticle 'bootstrap_4_layout.html.twig' %} #}
 
-{% block title %}Publier{% endblock %}
+{% block title %}Gestion des articles{% endblock %}
 
 
 {% block body %}
+<div class="
+
+{% if app.user %}
+{{ app.user.bgColor }}
+{% else %}
+
+{% endif %}
+">
 
 <div class="container mb-5">
      
@@ -46,24 +54,25 @@
 
             {{ form_row(formArticle.category, {'label': 'Catégorie'}) }}
 
-            {{ form_row(formArticle.content, {'label': 'Contenu', 'attr': {'placeholder': "Contenu de votre article"}}) }}
+            {{ form_row(formArticle.content, {'label': 'Contenu', 'attr': {'placeholder': "Contenu de votre article", 'label': 'Titre',
+            'rows' : '14', 'cols' : '20' }}) }}
 
             {{ form_row(formArticle.image, {'label': 'Image d\'illustration', 'attr': {'placeholder': "URL de votre image d'illustration"}}) }}     
                 
             </div>
-            <div class="alert alert-light">
             {% if editMode %}
-                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>
-                     <b>Enregistrer les modifications</b>
+                <button type="submit" class="btn btn-success mt-3 mb-3" style="font-size: 1.5em;"><i class="fas fa-check"></i>
+                     <b>Sauvegarder les modifications</b>
             {% else %}
-                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>
+                <button type="submit" class="btn btn-success mt-3 mb-3" style="font-size: 1.5em;"><i class="fas fa-check"></i>
                     <b>Ajouter l'article</b>
+                    </button>
             {% endif %}
-                </button>
             </div>
         </div>
     </div>
     {{form_end(formArticle)}}
  
+</div>
 </div>
 {% endblock %}

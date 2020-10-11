@@ -2,54 +2,122 @@
 
 namespace App\Controller;
 
-use App\Entity\Comment;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Article;
+use App\Entity\Comment;
+use App\Data\SearchData;
+use App\Entity\Carousel;
+use App\Form\SearchType;
 use App\Form\ArticleType;
 use App\Form\CommentType;
+use App\Service\StatsService;
+use App\Service\PaginationService;
+use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
-    /**
-     * @Route("/main", name="main")
-     */
-    public function index()
-    {
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([],['createdAt' => 'desc']);
+    // /**
+    //  * Affichage de la liste des articles dans le fil d'actualité
+    //  * 
+    //  * @Route("/main", name="main")
+    //  */
+    // public function index()
+    // {
+    //     $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([],['createdAt' => 'desc']);
 
         // $repo = $this->getDoctrine()->getRepository(Article::class);
 
         // $articles = $repo->findAll();
 
+    //     return $this->render('main/index.html.twig', [
+    //         'articles' => $articles
+    //     ]);
+    // }
+
+    /**
+     *Permet d'avoir accès à la liste des articles dans le fil d'actualité
+     *  
+     * @Route("/main/{page<\d+>?1}", name="main")
+     */
+    public function index($page, PaginationService $pagination, StatsService $statsService, request $request, ArticleRepository $repository){
+
+        // Filtre Article Symfony :
+        // J'initialise mes données
+        $data = new SearchData();
+        //Je créé le formulaire. Il utilisera une classe SearchType et les données $data
+        $form = $this->createForm(SearchType::class, $data);
+        // Permet de modifier l'objet $data qui représente mes données. Gère la requête qui lui est passsée en paramètre
+        $form->handleRequest($request);
+        $articles = $repository->findSearch($data);
+        // dump($data);
+        // die();
+
+
+
+
+
+        
+        // On récupère les commentaires validés de l'article
+        // $commentaires = $this->getDoctrine()->getRepository(Comment::class)->findBy(['status' => "Validé"],['created_at' => 'desc']);
+        
+        $article = $this->getDoctrine()->getRepository(Article::class)->findAll();
+        // dump($article);
+
+        // $article = $this->getDoctrine()->getRepository(Article::class)->findAll(['article']);
+
+        $commentaires = $this->getDoctrine()->getRepository(Comment::class)->findBy(['article' => $article,  'status' => "Validé"],['created_at' => 'desc']);
+        // dump($commentaires2);
+
+        $stats = $statsService->getStats();
+
+        $pagination->setEntityClass(Article::class)
+                   ->setPage($page);
+                   
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
-            'articles' => $articles
+            'pagination' => $pagination,
+            // 'commentaires2' => $commentaires2,
+            'article' => $article,
+            'commentaires' => $commentaires,
+            'stats' => $stats,
+
+            'articles' => $articles,
+            // J'envoie le formulaire à ma vue
+            'form' => $form->createView()
         ]);
     }
 
+
     /**
+     * Point d'entrée de notre site (front controller)
+     * 
      * @Route("/", name="home")
      */
     public function home()
     {
-        
+        $repo = $this->getDoctrine()->getRepository(Carousel::class);
+
+        $carousel = $repo->findAll();
+
         return $this->render('main/home.html.twig', [
-            'title' => "Bienvenue ici les amis !",
+            'carousel' => $carousel
         ]);
     }
 
     /**
-     * Création et modification d'un article
+     * Création d'un article dans le fil d'actualité
      * 
      * @Route("/main/new", name="main_create")
      * @Route("/main/{id}/edit", name="main_edit")
+     * @IsGranted("ROLE_EDITOR")
+     * 
      */
     public function form(Article $article = null, Request $request, EntityManagerInterface $manager)
     {
@@ -80,13 +148,18 @@ class MainController extends AbstractController
             if(!$article->getId()){
             $article->setCreatedAt(new \DateTime());
             $article->setUtilisateurs($user);
-            
+            }
 
-        }
+       
             $manager->persist($article);
             $manager->flush();
 
-            return $this->redirectToRoute('main_show', ['id' => $article->getId()]);
+            $this->addFlash(
+                'success',
+                "Votre modification a été prise en compte !"
+                );
+
+            return $this->redirectToRoute('account_publications');
         }
             return $this->render('main/create.html.twig', [
             'article' => $article,
@@ -122,7 +195,7 @@ class MainController extends AbstractController
 
     //     return $this->render('main/create.html.twig', [
     //         'formArticle' => $form->createView()
-    //         ]);
+    //         ]);(article.comments | length) - (
     // }
 
 
@@ -135,11 +208,20 @@ class MainController extends AbstractController
      */
     public function show($id, Request $request, EntityManagerInterface $manager)
     {
-        $article = $this->getDoctrine()->getRepository(Article::class)->findOneBy(['id' => $id],['createdAt' => 'desc']);
+        // On récupère l'article correspondant à l'id sélectionné
+        $article = $this->getDoctrine()->getRepository(Article::class)->findOneBy(['id' => $id]);
 
         // $article = $this->getDoctrine()->getRepository(Article::class)->findOneBy([
         //     'id' => $id,
         // ]);
+        
+
+        // On récupère les commentaires validés de l'article
+        $commentaires = $this->getDoctrine()->getRepository(Comment::class)->findBy(['article' => $article, 'status' => "Validé"],['created_at' => 'desc']);
+        dump($commentaires);
+        // die();
+       
+
 
         if(!$article){
             throw $this->createNotFoundException("L'article recherché n'existe pas");
@@ -165,7 +247,8 @@ class MainController extends AbstractController
             $comment->setArticle($article)
                     ->setCreatedAt(new \DateTime())
                     ->setAuthor($this->getUser())
-                    ->setUtilisateur($user);
+                    ->setUtilisateur($user)
+                    ->setStatus("Non validé");
 
 
         //On hydrate l'objet en y ajoutant les données  
@@ -185,7 +268,8 @@ class MainController extends AbstractController
 
         return $this->render('main/show.html.twig', [
             'article' => $article,
-            'commentForm' => $form->createView()
+            'commentForm' => $form->createView(),
+            'commentaires' => $commentaires
         ]);
     }
 

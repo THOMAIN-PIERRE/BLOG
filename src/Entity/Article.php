@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
+use App\Entity\Users;
+use App\Entity\Comment;
+use Twig\Cache\NullCache;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -23,13 +28,14 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=10, max=255, minMessage="Votre titre doit contenir 5 caractères minimum !")
+     * @Assert\Length(min=5, max=255, minMessage="Votre titre doit contenir 5 caractères minimum !")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\Length(min=30, minMessage="Votre commentaire doit contenir 30 caractères minimum !")
+    //  * @Assert\Length(min=100, minMessage="Votre commentaire doit contenir 30 caractères minimum !")
+     * @Assert\Length(min=2000, max=10000000, minMessage="Votre article doit contenir 2000 caractères minimum !")
      */
     private $content;
 
@@ -59,6 +65,11 @@ class Article
      * @ORM\JoinColumn(nullable=false)
      */
     private $utilisateurs;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
 
    //Ajouté pour convertir les categories en chaîne de caractères
@@ -185,5 +196,137 @@ class Article
         return $this;
     }
 
+
+
+
+
+   
+
+     /**
+     * Calcul de la moyenne
+     * 
+     * 
+     */
+    public function getAvgRatings() {
+
+        // $waitingComment = $this->getWaitingCommentCount();
+
+        // return compact('waitingComment');
+
+        // Calculer la somme des notations
+
+        // if($this->comment->getStatus() == "Validé"){
+        //     $status = $this->comment->getStatus();
+        // if($status == "Validé"){
+          
+            
+        // $count = count($this->comments) WHERE (comments->getStatus) = "Validé";
+
+
+
+
+
+        $sum = array_reduce($this->comments->toArray(), function($total, $comment) {
+           
+            if($comment->getStatus() === "Validé"){
+                return $total + $comment->getRating();
+           
+
+            }else{
+                return $total;
+            
+
+        }
+        }, 0);
+        // dump($sum);
+        // die();
+
+    // }
+    // }
+
+        $nbValidatedComments = array_reduce($this->comments->toArray(), function($total, $comment) {
+           
+            if($comment->getStatus() === "Validé"){
+            return $total + 1;
+       
+
+            }else{
+                return $total;
+        
+    }
+    }, 0);
+
+        // Faire la division pour avoir la moyenne
+        // if(count($this->comments) > 0) return round($sum /count($this->comments));
+
+        if($nbValidatedComments > 0) return ceil($sum / $nbValidatedComments);
+
+        return 0;
+
+    }
+
+     /**
+     * Permet de récupérer le commentaire d'un auteur par rapport à un article
+     * 
+     * @param Users $author
+     * @return Comment|null
+     */
+    public function getCommentFromAuthor(Users $author){
+
+        foreach($this->comments as $comment) {
+
+        //    return $comment->getAuthor();
+        
+           if($comment->getAuthor() == ($author)) return $comment;
+            
+       
+            // dump($comment);
+            // die();
+
+            // dump($author);
+            // die();
+            
+        }
+
+        return null;
+    }
+
+    /**
+     * Permet de récupérer le commentaire d'un auteur par rapport à un article
+     * 
+     * @param Users $author
+     * @return Comment|null
+     */
+    public function getStatusFromComment(Users $author){
+
+        foreach($this->comments as $comment) {
+
+        //    return $comment->getAuthor();
+        
+           if($comment->getAuthor() == ($author)) return $comment;
+            
+       
+            // dump($comment);
+            // die();
+
+            // dump($author);
+            // die();
+            
+        }
+
+        return null;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 
 }

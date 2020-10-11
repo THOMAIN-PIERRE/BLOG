@@ -3,14 +3,15 @@
 {% block title %}Gestion des articles{% endblock %}
 
 {% block body %}
-    <div class="admin-page">
+    <div class="admin-page {{ app.user.adminBgColor }}">
         <div class="container">
-            <div class="row mt-5">
-                <div class="col s12">
+            <div class="row">
+                <div class="col table-responsive mt-5">
                     <a href="{{ path('admin_article_create') }}" class="btn btn-primary" style="float: right"><strong>Ajouter</strong></a>
-                    <h2>Liste des articles</h2>
+                    <h2>LISTE DES ARTICLES</h2>
                     <table class="table table-hover mt-3">
-                        <thead class="thead-dark">
+                        <thead class="{{ app.user.adminTableColor }} text-white">
+
                             <tr>
                                 <th class="text-center align-middle">#</th>
                                 <th class="text-center align-middle">Titre</th>
@@ -19,18 +20,28 @@
                                 <th class="text-center align-middle">Image</th>
                                 <th class="text-center align-middle">Contenu</th>
                                 <th class="text-center align-middle" style="width:16%;">Date de publication</th>
+                                {# {% if article.updatedAt is not null %} #}
+                                <th class="text-center align-middle" style="width:16%;">Date de modification</th>
+                                {# {% else %}
+
+                                {% endif %} #}
                                 <th class="text-center align-middle">Actions</th>
                             </tr>
                         </thead> 
-                        {% for article in articles %}
+                        {% for article in pagination.blog %}
                             <tr>
                                 <td class="text-center align-middle">{{article.id}}</td>
-                                <td class="text-center align-middle"><strong>{{article.title}}</strong></td>
+                                <td class="text-center align-middle"><strong>{{article.title |slice(0,30)|raw}}</strong></td>
                                 <td class="text-center align-middle">{{ article.category.title }}</td>
                                 <td class="text-center align-middle">{{ article.utilisateurs.username }}</td>
-                                <td class="text-center align-middle" style="width:15%;"><img src="{{ article.image }}" alt="Illustration de l'article intitulé : {{article.title}}" style="width: 120px; height:80px;" class="img-fluid"></td>
-                                <td class="align-middle">{{ article.content |slice(0,140)|raw }}</td>
+                                <td class="text-center align-middle" style="width:15%;"><img src="{{ article.image }}" class="img-responsive" alt="Illustration de l'article intitulé : {{article.title}}" style="width: 120px; height:80px;" class="img-fluid"></td>
+                                <td class="align-middle" style="width:25%;">{{ article.content |slice(0,70)|raw }}</td>
                                 <td class="text-center align-middle">{{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }}</td>
+                                {% if article.updatedAt is not null %}
+                                <td class="text-center align-middle">{{ article.updatedAt | date ('d/m/Y') }} à {{ article.updatedAt | date ('H:i') }}</td>
+                                {% else %}
+                                <td class="text-center align-middle">-</td>
+                                {% endif %}
                                 <td class="text-center align-middle">
                                     <a href="{{ path('admin_article_edit', {'id': article.id}) }}" class="btn btn-success mr-2 mb-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
                                     <a href="{{ path('admin_article_delete', {'id': article.id}) }}" class="btn btn-danger mr-2 mb-2"><i class="fas fa-trash"></i></a>
@@ -39,8 +50,12 @@
                         {% endfor %}
                     </table>
                     <hr>
+                    <div>
+  {% include 'admin/template_parts/pagination.html.twig' with {'route' : 'admin_article'} %}
+</div>
                 </div>
             </div>
         </div>
     </div>
+     <footer class="{{ app.user.adminBgColor }}" style="height: 1000px;"></footer>
  {% endblock %}           

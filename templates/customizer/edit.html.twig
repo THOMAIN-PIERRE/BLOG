@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PARAMETRES DU COMPTE{% endblock %}
+
+{% block body %}
+
+<div class="container col-4 mt-5 mb-4">
+    <h1 class="mb-4 text-center">MODIFIER LE STYLE DE MON COMPTE</h1>
+
+    {{form_start(form)}}
+    
+
+    <div class="row">
+       
+            <div class="card-body alert alert-secondary">
+             {{ form_widget(form) }}
+            <button type="submit" class="btn btn-success mt-3 mb-4 center-block"><a href=""></a><i class="fa fa-check" aria-hidden="true"></i> <b>Valider</b></a></button><br>
+            <a href="{{ path('customizer') }}" ><b><i class="fas fa-arrow-circle-right" style="font-size: 2em;" aria-hidden="true"> Retour a la liste des paramètres</i></b></a>
+    </div>
+       
+ 
+    
+
+   
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

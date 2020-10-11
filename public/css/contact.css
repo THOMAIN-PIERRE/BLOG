@@ -1,16 +1,22 @@
-body {
-    background: url('https://www.ionos.fr/digitalguide/fileadmin/DigitalGuide/Teaser/blog-t.jpg') fixed;
+body{
+   background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR-oj_Vi4vpcTjA9FHrEHfCu55viohgsgL4fw&usqp=CAU") fixed;
    background-size: cover;
 }
+/*MEDIA QUERIES-------------------------------------------------------*/
+@media screen and (min-width: 300px) and (max-width: 1023px) {
 
-#formContact{
-   max-width: 600px;
-   padding: 15px;
-   margin: 0 auto;
-   border-radius: 2em;
-   background-color: white;
-   opacity: 0.88;
-}
-label{
-    color: black;
+   #formNewsletter{
+      display: none;
+   }    
+   #footerContact{
+      text-align:center;
+   } 
+   #footerContact2{
+      display: none;
+   } 
+   body {
+      background-color:#87CEEB;
+      width: auto;
+      height: auto;
+   }         
 }
