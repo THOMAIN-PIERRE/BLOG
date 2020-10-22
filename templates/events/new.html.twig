@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EVENEMENTS{% endblock %}
+
+{% block body %}
+
+<div class="container col-5 mt-5 mb-5">
+    <h1 class="mb-4 text-center">CREER UN EVENEMENT</h1>
+
+    {# {{form_start(form)}}
+    
+
+    <div class="row-5">
+       
+            <div class="card-body alert alert-secondary">
+             {{ form_widget(form) }}
+            <button type="submit" class="btn btn-success mt-3 mb-5 center-block"><a href=""></a><i class="fa fa-check-circle" aria-hidden="true"></i> <b>Valider</></b></a></button>
+
+    </div>
+       
+   
+    {{ form_end(form) }} #}
+
+
+
+    {{form_start(form)}}
+    
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-dark">
+                
+            {{ form_row(form.name, {'label': 'Nom de l\'évènement', 'attr': {'placeholder': "Saisissez l'intitulé de l'évènement"}}) }}
+
+            {{ form_row(form.subtitle, {'label': 'Sous-titre de l\'évènement', 'attr': {'placeholder': "Saisissez le sous-titre de l'évènement"}}) }}
+
+            {{ form_row(form.date, {'label': 'Date de l\'évènement', 'attr': {'placeholder': "Saisissez une date et une heure pour l'évènement"}}) }}
+
+            {{ form_row(form.place, {'label': 'Lieu de l\'évènement', 'attr': {'placeholder': "Saisissez une localisation"}}) }}
+
+            {{ form_row(form.picture, {'label': 'Image d\'illustration', 'attr': {'placeholder': "URL de votre image d'illustration"}}) }}  
+
+            {{ form_row(form.description, {'label': 'Contenu', 'attr': {'placeholder': "Description de l'évènement", 'label': 'Titre',
+            'rows' : '10', 'cols' : '20' }}) }}   
+                
+            {# </div class="alert alert-dark"> #}
+            {% if editMode %}
+                <button type="submit" class="btn btn-success mt-3 mb-3" style="font-size: 1.5em;"><i class="fas fa-check"></i>
+                     <b>Valider les modifications</b>
+            {% else %}
+                <button type="submit" class="btn btn-success mt-3 mb-3" style="font-size: 1.5em;"><i class="fas fa-check"></i>
+                    <b>Ajouter</b>
+                    </button>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    {{form_end(form)}}
+ 
+
+</div>
+{% endblock %}

@@ -80,6 +80,46 @@ class PaginationService {
 
     }
 
+    // Pagination et affichage de la liste des évènements présentés du plus proche au plus lointain
+    public function getEvent(){
+
+        // 1) Calcul de l'offset (= start)
+
+        $offset = $this->currentPage * $this->limit - $this->limit;
+
+         // 2) Demander au repository de trouver les éléments
+
+         $repo = $this->manager->getRepository($this->entityClass);
+
+         $display = $repo->findBy([], ['date' => "asc"], $this->limit, $offset);
+
+         // 3) Renvoyer les éléments en question
+
+         return $display;
+
+    }
+
+
+     // Pagination et affichage dans l'administration de la liste des évènements présentés du plus proche au plus lointain
+     public function getEventAdmin(){
+
+        // 1) Calcul de l'offset (= start)
+
+        $offset = $this->currentPage * $this->limit - $this->limit;
+
+         // 2) Demander au repository de trouver les éléments
+
+         $repo = $this->manager->getRepository($this->entityClass);
+
+         $display = $repo->findBy([], ['date' => "asc"], $this->limit, $offset);
+
+         // 3) Renvoyer les éléments en question
+
+         return $display;
+
+    }
+
+
     // Pagination et affichage de la liste des commentaires validés
     public function getCommentValide(){
 
@@ -136,6 +176,8 @@ class PaginationService {
          return $data;
 
     }
+
+
 
     
     public function setPage($page){

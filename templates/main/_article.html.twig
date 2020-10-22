@@ -1,0 +1,53 @@
+ <hr>
+  <div class="col-md-9 ml-5 bg-warning
+            
+{% if app.user %}
+{{ app.user.bgColor }}
+{% else %}
+
+{% endif %}
+">
+    {% if article.comments | length > 0 %}
+    {# {% if comment.status is same as ("Validé")  %} #}
+            <div class="float-right mr-2 btn btn-success">
+        {% include 'template_parts/_rating.html.twig' with {'rating' : article.AvgRatings} %}
+         <br>
+         {# {% set commentaires = pagination %} #}
+         {# {% if article.comments.status is same as ("Validé")  %} #}
+    {# <p class="mt-2 mb-1" style="font-size: 1.2em;"><strong>{{ article.comments | length }}</strong> avis</p> #}
+        {# <p class="mt-2 mb-1" style="font-size: 1.2em;">{{ stats.validatedCommentCount }}<strong></strong> avis</p> #}
+        {# {% endif %} #}
+            </div>
+    {% else %}
+         {% if app.user %}
+         {# {{dump(app.user)}} #}
+        <a href="{{ path('main_show', {'id' : article.id}) }})" class="btn btn-success btn-lg float-right ml-2 mr-2" style="color:yellow; text-shadow: 4px 6px 8px black;"><h4><b>Donner mon avis !</b></h4></a> 
+         {% endif %} 
+    {% endif %}
+
+<h2><b>{{ article.title }}</b></h2>
+    <h4 class="metadata mt-3"><i>Publié le {{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }} par <strong>{{ article.utilisateurs }}</strong>
+    {% if article.updatedAt is not null %}
+    <span style="font-size: 0.8em; color: blue;">- Modifié le {{ article.updatedAt | date ('d/m/Y') }} à {{ article.updatedAt | date ('H:i') }}</span></i></h4>
+    {% else %}
+    
+    {% endif %}
+    <h4 class="metadata mt-3"><i>Catégorie : <h2 class="badge badge-primary" style="font-size: 1em;">{{ article.category.title }}</h2></i></h4>
+    <h4 class="metadata"><i>Contenu libre : <h2 class="badge badge-success text-light" style="font-size: 1em;">{{ ((2000*100) / (article.content | length)) | number_format(0, '.', ',') }}%</h2></i></h4>
+        <div class="content">
+        <img src="{{ article.image }}" alt="image" class="float-left img-fluid mb-2"  style="margin-right: 1rem;">
+        {# <p>{{ article.content |slice(0,1800)|raw }}</p> #}
+        <p  style="text-align: justify">{{ article.content|slice(0,2000)|raw }} .......</p>
+       {% if app.user %}
+        <p style="color: blue; font-size: 1.5em">Il vous reste <b>{{ (100 - ((2000*100) / (article.content | length))) | number_format(0, '.', ',') }}%</b> de cet article à lire ...</p>
+        <a href="{{ path('main_show', {'id' : article.id}) }})" class="btn btn-primary" style="font-size: 1.5em;"><i class="fas fa-eye"></i><b> Lire la suite</b></a>
+        {% else %}
+        <p style="color: red; font-size: 1.5em">Il vous reste <b>{{ (100 - ((2000*100) / (article.content | length))) | number_format(0, '.', ',') }}%</b> de cet article à lire ...</p>
+        {# <a href="{{path('security_login')}}" class="btn btn-danger mt-2" style="font-size: 1.5em;"><b>S'inscrire pour lire la suite <i style="color: yellow;">({{ (100 - ((2000*100) / (article.content | length))) | number_format(0, '.', ',') }}%)</i></b></a> #}
+        <a href="{{path('security_login')}}" class="btn btn-danger" style="font-size: 1.5em;"><b> La suite est réservée aux abonnés !</b></a>
+       {% endif %}
+        </div>
+      <hr>
+
+          </div>
+</div>

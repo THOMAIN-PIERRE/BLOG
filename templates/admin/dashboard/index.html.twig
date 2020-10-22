@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <h1 class="bg-dark rounded-pill text-light text-center p-2"><b>NOTES</b></h1>
         <div class="col">
             <div class="alert bg-success text-light">
                 <h2 class="alert-heading my-3" style="color:yellow; text-shadow: 2px 6px 2px black; font-size: 2em;"><i class="fas fa-trophy"></i><strong> ARTICLES LES PLUS POPULAIRES</strong></h2>
@@ -72,29 +72,31 @@
                         <tr>
                             <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">#</th>
                             <th style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">TITRE</th>
-                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">NOTE</th>
+                            <th class="text-center align-middle" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">AUTEUR</th>
+                            <th style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">AVATAR</th>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">NOTE / 5</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for article in bestArticles %}
                         <tr>
-                            <td class="text-center"><strong>{{article.id}}</strong></td>
-                            <td><strong>{{article.title |slice(0,170)|raw}}</strong></td>
-                           
-                            <td class="text-center">
+                            <td class="text-center align-middle"><strong>{{article.id}}</strong></td>
+                            <td class="align-middle"><strong>{{article.title |slice(0,170)|raw}}</strong></td>
+                            <td class="text-center align-middle">{{article.username}}</strong></td>
+                            <td class="text-center align-middle"><strong><img src="{{article.avatar}}" alt="photo de l'auteur" style="max-width:55px; border-radius:50%"></strong></td>
+                            <td class="text-center align-middle">
                                 <span class="badge badge-warning" style="font-size: 1.3em;">
                                     {{article.note | number_format(1, ",", " ")}}
                                     
                                 </span>
                             </td>
                         </tr>
-                         {% endfor %}
-                   
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
         
-        <div class="row">
+        {# <div class="row"> #}
         <div class="col">
             <div class="alert bg-danger text-light">
                 <h2 class="alert-heading my-3" style="color:yellow; text-shadow: 2px 6px 2px black; font-size: 2em;"><i class="fas fa-arrow-circle-down"></i><strong> ARTICLES LES MOINS POPULAIRES</strong></h2>
@@ -103,16 +105,19 @@
                         <tr>
                             <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">#</th>
                             <th style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">TITRE</th>
-                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">NOTE</th>
+                            <th class="text-center align-middle" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">AUTEUR</th>
+                            <th style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">AVATAR</th>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">NOTE / 5</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for article in worstArticles %}
                         <tr>
-                            <td class="text-center"><strong>{{article.id}}</strong></td>
-                            <td><strong>{{article.title |slice(0,170)|raw}}</strong></td>
-                           
-                            <td class="text-center">
+                            <td class="text-center align-middle"><strong>{{article.id}}</strong></td>
+                            <td class="align-middle"><strong>{{article.title |slice(0,150)|raw}}</strong></td>
+                            <td class="text-center align-middle"><strong>{{article.username}}</strong></td>
+                            <td class="text-center align-middle"><strong><img src="{{article.avatar}}" alt="photo de l'auteur" style="max-width:55px; border-radius:50%"></strong></td>
+                            <td class="text-center align-middle">
                                 <span class="badge badge-warning" style="font-size: 1.3em;">
                                     {{article.note | number_format(1, ",", " ")}}
                                     
@@ -125,4 +130,98 @@
                 </table>
             </div>
         </div>
+        <h1 class="bg-dark rounded-pill text-light text-center p-2"><b>COMMENTAIRES</b></h1>
+        <div class="col">
+            <div class="alert bg-success text-light">
+                <h2 class="alert-heading my-3" style="color:yellow; text-shadow: 2px 6px 2px black; font-size: 2em;"><i class="fas fa-trophy"></i><strong> ARTICLES LES PLUS COMMENTES</strong></h2>
+                <table class="table table-hover text-white">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">#</th>
+                            <th style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">TITRE</th>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;"><i class="fas fa-comments fa-2x" style="color:color:yellow; text-shadow: 2px 6px 2px black;"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in mostCommentedArticles %}
+                        <tr>
+                            <td class="text-center align-middle"><strong>{{article.id}}</strong></td>
+                            <td class="align-middle"><strong>{{article.title |slice(0,170)|raw}}</strong></td>
+                            <td class="text-center align-middle">
+                                <span class="badge badge-warning" style="font-size: 1.3em;">
+                                    {{article.number}}
+                                    
+                                </span>
+                                commentaire(s)
+                            </td>
+                        </tr>
+                         {% endfor %}
+                   
+                    </tbody>
+                </table>
+            </div>
+        
+        <div class="row">
+        <div class="col">
+            <div class="alert bg-danger text-light">
+                <h2 class="alert-heading my-3" style="color:yellow; text-shadow: 2px 6px 2px black; font-size: 2em;"><i class="fas fa-arrow-circle-down"></i><strong> ARTICLES LES MOINS COMMENTES</strong></h2>
+                <table class="table table-hover text-white">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">#</th>
+                            <th style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">TITRE</th>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;"><i class="fas fa-comments fa-2x" style="color:yellow; text-shadow: 2px 6px 2px black;"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in lessCommentedArticles %}
+                        <tr>
+                            <td class="text-center align-middle"><strong>{{article.id}}</strong></td>
+                            <td class="align-middle"><strong>{{article.title |slice(0,150)|raw}}</strong></td>
+                            <td class="text-center align-middle">
+                                <span class="badge badge-warning" style="font-size: 1.3em;">
+                                    {{article.number}}
+                                    
+                                </span>
+                                commentaire(s)
+                            </td>
+                        </tr>
+                         {% endfor %}
+                   
+                    </tbody>
+                </table>
+            </div>
+     
+        
+    <h1 class="bg-secondary rounded-pill text-light text-center p-2"><b>LES ABONNES</b></h1>
+         <div class="row">
+        <div class="col">
+            <div class="alert bg-secondary text-light">
+                <h2 class="alert-heading my-3" style="color:yellow; text-shadow: 2px 6px 2px black; font-size: 2em;"><i class="fas fa-trophy"></i><strong> LES ABONNES LES PLUS PROLIXES</strong></h2>
+                <table class="table table-hover text-white">
+                    <thead>
+                        <tr>
+                            {# <th class="text-center align-middle" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">RANG</th> #}
+                            <th class="text-center align-middle" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">AVATAR</th>
+                            <th class="text-center align-middle" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;">PSEUDO</th>
+                            <th class="text-center" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;"><i class="fas fa-comments fa-2x" style="color:color:yellow; text-shadow: 2px 6px 2px black;"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for users in totalCommentsPerPerson %}
+                        <tr>
+                            {# <td class="text-center align-middle" style="color:yellow; text-shadow: 4px 6px 4px black; font-size: 1.5em;"></th> #}
+                            <td class="text-center align-middle"><strong><img src="{{users.avatar}}" alt="photo de l'auteur" style="max-width:55px; border-radius:50%"></strong></td>
+                            <td class="text-center align-middle"><strong>{{users.username}}</strong></td>
+                            <td class="text-center align-middle">
+                                <span class="badge badge-warning" style="font-size: 1.3em;">
+                                    {{users.num}} 
+                                </span>
+                                commentaire(s) posté(s)
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 {% endblock %}

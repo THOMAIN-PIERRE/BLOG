@@ -47,46 +47,58 @@ class MainController extends AbstractController
      *  
      * @Route("/main/{page<\d+>?1}", name="main")
      */
-    public function index($page, PaginationService $pagination, StatsService $statsService, request $request, ArticleRepository $repository){
+    public function index($page, PaginationService $pagination, StatsService $statsService, Request $request, ArticleRepository $repository){
 
         // Filtre Article Symfony :
         // J'initialise mes données
-        $data = new SearchData();
+        // $data = new SearchData();
         //Je créé le formulaire. Il utilisera une classe SearchType et les données $data
-        $form = $this->createForm(SearchType::class, $data);
+        // $form = $this->createForm(SearchType::class, $data);
         // Permet de modifier l'objet $data qui représente mes données. Gère la requête qui lui est passsée en paramètre
-        $form->handleRequest($request);
-        $articles = $repository->findSearch($data);
+        // $form->handleRequest($request);
+        // $articles = $repository->findSearch($data);
         // dump($data);
         // die();
 
+        $search = new SearchData();
+        $search->page = $request->get('page', 1);
+        $form = $this->createForm(SearchType::class, $search);
 
-
-
+        // Pour récupérer le formulaire (et les données recherchées indiquées dedans) du côté du controller
+        $form->handleRequest($request);
+    
+            // Je déclare la méthode findSearch() qui va me permettre d'extraire ce que je veux de la BDD (= ce qui correspond a mes données de recherche) et qui va reçoit les critères de recherche saisis dans le menu de filtration
+            
+            // dump($criteria);
+            // die();
+            $articles = $repository->findSearch($search);
+            // dump($search);
+            // dump($articles);
+            // die();
 
         
         // On récupère les commentaires validés de l'article
-        // $commentaires = $this->getDoctrine()->getRepository(Comment::class)->findBy(['status' => "Validé"],['created_at' => 'desc']);
+        // $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([],['createdAt' => 'desc']);
         
-        $article = $this->getDoctrine()->getRepository(Article::class)->findAll();
+        // $article = $this->getDoctrine()->getRepository(Article::class)->findAll();
         // dump($article);
 
         // $article = $this->getDoctrine()->getRepository(Article::class)->findAll(['article']);
 
-        $commentaires = $this->getDoctrine()->getRepository(Comment::class)->findBy(['article' => $article,  'status' => "Validé"],['created_at' => 'desc']);
+        // $commentaires = $this->getDoctrine()->getRepository(Comment::class)->findBy(['article' => $article,  'status' => "Validé"],['created_at' => 'desc']);
         // dump($commentaires2);
 
-        $stats = $statsService->getStats();
+        // $stats = $statsService->getStats();
 
-        $pagination->setEntityClass(Article::class)
-                   ->setPage($page);
+        // $pagination->setEntityClass(Article::class)
+        //            ->setPage($page);
                    
         return $this->render('main/index.html.twig', [
-            'pagination' => $pagination,
+            // 'pagination' => $pagination,
             // 'commentaires2' => $commentaires2,
-            'article' => $article,
-            'commentaires' => $commentaires,
-            'stats' => $stats,
+            // 'article' => $article,
+            // 'commentaires' => $commentaires,
+            // 'stats' => $stats,
 
             'articles' => $articles,
             // J'envoie le formulaire à ma vue
@@ -100,14 +112,29 @@ class MainController extends AbstractController
      * 
      * @Route("/", name="home")
      */
-    public function home()
+    public function home(StatsService $statsService)
     {
         $repo = $this->getDoctrine()->getRepository(Carousel::class);
 
         $carousel = $repo->findAll();
 
+        $article = new Article();
+
+        $stats = $statsService->getStats();
+
+        $HomeBestArticles = $statsService->getHomeArticlesStats('DESC');
+
+        $MostCommentedArticles = $statsService->getHomeCommentsStats('DESC');
+
+        $TotalCommentsPerPerson = $statsService->getHomeCommentsStatsPerPerson('DESC');
+
         return $this->render('main/home.html.twig', [
-            'carousel' => $carousel
+            'carousel' => $carousel,
+            'article' => $article,
+            'stats' => $stats,
+            'HomeBestArticles' => $HomeBestArticles,
+            'MostCommentedArticles' => $MostCommentedArticles,
+            'TotalCommentsPerPerson' => $TotalCommentsPerPerson
         ]);
     }
 
@@ -272,6 +299,29 @@ class MainController extends AbstractController
             'commentaires' => $commentaires
         ]);
     }
+
+
+
+
+
+
+
+    // /**
+    // * 
+    // * @Route("/main", name="main")
+    // *
+    // */
+    // public function searchArticle(Request $request)
+    // {
+    //     $form = $this->createForm(SearchType::class);
+
+    //     return $this->render('main/index.html.twig', [
+
+    //     // J'envoie le formulaire à ma vue
+    //     'form' => $form->createView(),
+
+    //     ]);
+    // }
 
 }
    

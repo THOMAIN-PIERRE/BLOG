@@ -19,11 +19,11 @@
                             <tr>
                                 <th class="text-center align-middle">#</th>
                                 <th class="text-center align-middle">Commentaire</th>
-                                <th class="text-center align-middle" style="width:20%;">Date de publication</th>
+                                <th class="text-center align-middle">Date de publication</th>
                                 <th class="text-center align-middle">Statut</th>
                                 <th class="text-center align-middle">Auteur</th>
-                                <th class="text-center align-middle" style="width:10%;"># article</th>
-                                <th class="text-center align-middle" style="width:20%;">Titre article</th>
+                                <th class="text-center align-middle"># article</th>
+                                <th class="text-center align-middle">Titre article</th>
                                 <th class="text-center align-middle">Actions</th>
                             </tr>
                         </thead>
@@ -34,7 +34,7 @@
                         {# {% for comment in commentairesNonValides %} #}
                                 <tr class="text-dark">
                                     <td class="text-center align-middle">{{ comment.id }}</td>
-                                    <td class="align-middle">{{ comment.content|slice(0,100)|raw }} ...</td>
+                                    <td class="align-middle">{{ comment.content|slice(0,50)|raw }} ...</td>
                                     <td class="text-center align-middle">{{ comment.createdAt | date ('d/m/Y') }} à {{ comment.createdAt | date ('H:i') }}</td>
                                     <td class="text-center align-middle">{{ comment.status }}</td>
                                     <td class="text-center align-middle">{{ comment.utilisateur.username }}</td>

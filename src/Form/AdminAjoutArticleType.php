@@ -40,7 +40,7 @@ class AdminAjoutArticleType extends AbstractType
                     'cols' =>  '20'
                     ]
                 ], $this->getConfiguration("Contenu de l'article", "Saisissez le titre de l'article"))
-            ->add('image', UrlType::class)
+            ->add('image', UrlType::class,  $this->getConfiguration("Image", "Saisissez l'URL de votre image"))
         ;
     }
 

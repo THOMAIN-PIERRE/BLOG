@@ -24,9 +24,9 @@ class CategoryRepository extends ServiceEntityRepository
     //  */
     /*
     public function findByExampleField($value)
+    ->andWhere('c.exampleField = :val')
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
             ->setParameter('val', $value)
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)

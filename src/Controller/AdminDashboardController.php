@@ -47,6 +47,12 @@ class AdminDashboardController extends AbstractController
 
         $worstArticles = $statsService->getArticlesStats('ASC');
 
+        $mostCommentedArticles = $statsService->getAdminCommentsStats('DESC');
+
+        $lessCommentedArticles = $statsService->getAdminCommentsStats('ASC');
+
+        $totalCommentsPerPerson = $statsService->getAdminCommentsStatsPerPerson('DESC');
+
         // $bestArticles = $manager->createQuery(
         //         'SELECT AVG(c.rating) as note, a.title, a.id
         //         FROM App\Entity\Comment c
@@ -79,6 +85,9 @@ class AdminDashboardController extends AbstractController
             'stats' => $stats,
             'bestArticles' => $bestArticles,
             'worstArticles' => $worstArticles,
+            'mostCommentedArticles' => $mostCommentedArticles,
+            'lessCommentedArticles' => $lessCommentedArticles,
+            'totalCommentsPerPerson'=> $totalCommentsPerPerson
         ]);
     }
-}
+} 

@@ -23,33 +23,33 @@ rel="stylesheet" href="{{asset ('css/style.css')}}">
 				</div>
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6 mt-2 mb-4">
-				<h5 class="mb-4 font-weight-bold" id="footerContact2">Information</h5>
+				<h5 class="mb-4 font-weight-bold" id="footerContact2">Informations</h5>
 				<div class="row">
 					<div class="col-10">
-						<p class="mb-0" id="footerContact2">Conditions d'utilisation</p>
+						<p class="mb-0" id="footerContact2"><a href="{{ path('cgu') }}">Conditions d'utilisation</a></p>
 					</div>
 				</div>
 				<br>
 				<div class="row">
 					<div class="col-10">
-						<p class="mb-0" id="footerContact2">Politique de confidentialité</p>
+						<p class="mb-0" id="footerContact2"><a href="{{ path('politiqueConfidentialite') }}">Politique de confidentialité</a></p>
 					</div>
 				</div>
 				<br>
 				<div class="row">
 					<div class="col-10">
-						<p class="mb-0" id="footerContact2">Mentions légales</p>
+						<p class="mb-0" id="footerContact2"><a href="{{ path('mentionsLegales') }}">Mentions légales</a></p>
 					</div>
 				</div>
 
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6 mt-2 mb-4">
-				<h5 class="mb-4 font-weight-bold">Visiteur</h5>
+				<h5 class="mb-4 font-weight-bold">Visiteurs</h5>
 				<span>
 					<a href="{{ path('security_login') }}">Connexion à mon compte</a>
 				</span>
 				<br><br>
-				<span>Nos Evénements</span>
+				<span style="color: yellow"><a href="{{path('event_index')}}">Accéder aux évènements</a></span>
 			</div>
 			<div class="col-lg-3 col-md-6 col-sm-6 mt-2 mb-4">
 				<h5 class="mb-3 font-weight-bold" id="formNewsletter">NEWSLETTER.blog</h5>

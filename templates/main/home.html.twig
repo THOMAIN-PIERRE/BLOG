@@ -1,70 +1,279 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<article class="container
+	<article class="container
+			
+			{% if app.user %}
+			{{ app.user.bgColor }}
+			{% else %}
+			
+			{% endif %}
+			">
 
-{% if app.user %}
-{{ app.user.bgColor }}
-{% else %}
+		<div class="container jumbotron bg-primary text-light mt-4">
+			<h1 class="display-3">
+				<font style="vertical-align: inherit;">
+					<font style="vertical-align: inherit;">
+						Bienvenue sur .BLOG !
+					</font>
+				</font>
+			</h1>
+			<p class="lead mt-3">
+				<font style="vertical-align: inherit;">
+					<h4>
+						<font style="vertical-align: inherit;">
+							Qui sommes nous ? Il s'agit d'une simple unité de héros, un composant simple de style jumbotron pour attirer une attention particulière sur le contenu ou les informations prévues
+						</font>
+					</font>
+				</h4>
+			</p>
+			<hr class="my-4" style="border: none; border-bottom: 2px solid #fff; font-size: 3px;">
+			<p>
+				<h4>
+					<font style="vertical-align: inherit;">
+						<font style="vertical-align: inherit;">
+							Que faisons nous ? Il utilise des classes utilitaires pour la typographie et l'espacement pour espacer le contenu dans le plus grand conteneur .
+						</font>
+					</font>
+				</p>
+			</p>
+		</h4>
+		<p class="lead">
+			<a class="btn btn-success btn-lg mt-2 p-3 middle" href="{{ path('main' )}}" role="button">
+				<font style="vertical-align: inherit;">
+					<font style="vertical-align: inherit;">
+						<i class="fas fa-eye"></i>
+						<b>
+							Découvrir nos articles !</b>
+					</font>
+				</font>
+			</a>
+		</p>
+	{# </div> #}
+	{# <div class="container justify-content-center"> #}
+	{# <div class="row mt-5">
+		<div class="col-lg-6">
+			<div class="card" style="width: 18rem;">
+  				<ul class="list-group list-group-flush">
+    				<li class="list-group-item text-light text-center bg-secondary"><b>TOP 3 JOURNALISTES</b></li>
+    				<li class="list-group-item text-light text-center bg-secondary"><b>1</b></li>
+    				<li class="list-group-item text-light text-center bg-secondary"><b>2</b></li>
+					<li class="list-group-item text-light text-center bg-secondary"><b>3</b></li>
+  				</ul>
+			</div> #}
+		{# <div class="col-md-6">
+			<div class="card" style="width: 18rem;">
+  				<ul class="list-group list-group-flush">
+    				<li class="list-group-item text-light text-center bg-secondary"><b>TOP 3 ABONNES</b></li>
+    				<li class="list-group-item text-light text-center bg-secondary"><b>1</b></li>
+    				<li class="list-group-item text-light text-center bg-secondary"><b>2</b></li>
+					<li class="list-group-item text-light text-center bg-secondary"><b>3</b></li>
+  				</ul>
+			</div>
+		</div>
+	{# </div> #}
+{# </p> #} 
 
-{% endif %}
-">
+</article>
+	{# <a style="color:black; font-size: 1.8rem" class="nav-link ml-3 pull-left-top" href="{{path('admin_account_login')}}"><i class="fa fa-cog" aria-hidden="true"></i></a> #}
+	{# <h1 style="text-align:center; border:5px solid blue;" class="mb-4  mt-5"><b>Bienvenue sur .blog !</b></h1>
+	<h2 style="color:black; font-size: 1.8rem; text-align:center" class="mb-4">Qui sommes-nous ?</h2> #}
 
-{# <a style="color:black; font-size: 1.8rem" class="nav-link ml-3 pull-left-top" href="{{path('admin_account_login')}}"><i class="fa fa-cog" aria-hidden="true"></i></a> #}
-{# <h1 style="text-align:center; border:5px solid blue;" class="mb-4  mt-5"><b>Bienvenue sur .blog !</b></h1>
-<h2 style="color:black; font-size: 1.8rem; text-align:center" class="mb-4">Qui sommes-nous ?</h2> #}
+<h1 class="container text-center mt-5 mb-5 bg-primary p-2 rounded-pill" style="color:yellow; text-shadow: 4px 6px 8px black;"><b>NOS ABONNES VEDETTES</b></h1>
 
-<div class="container-fluid mt-5 mb-5">
-      <div id="demo" class="carousel slide" data-ride="carousel">
-        <!-- Indicateurs -->
-        <ul class="carousel-indicators">
-          <li data-target="#demo" data-slide-to="0" class="active"></li>
-          <li data-target="#demo" data-slide-to="1"></li>
-          <li data-target="#demo" data-slide-to="2"></li>
-          <li data-target="#demo" data-slide-to="3"></li>
-        </ul>
+<div class="container">
+<div class="row alert alert-info">
+{% for users in TotalCommentsPerPerson %}
+  <div class="col-sm-4 mt-2 mb-2">
+    <div class="card">
+	<div class="card-header text-center">
+	
+	{% if loop.first %}
+		<span class="mt-2 mb-2"><i class="fas fa-medal fa-3x mt-3" style="color: yellow; text-shadow: 6px 5px 8px black;"><b> OR</b></i></span>
+	{% elseif loop.last %}
+		<i class="fas fa-medal fa-3x mt-3" style="color: #CD7F32 ; text-shadow: 6px 5px 8px black;"><b> BRONZE</b></i>
+	{% else %}
+		<i class="fas fa-medal fa-3x mt-3" style="color: silver; text-shadow: 6px 5px 8px black;"><b> ARGENT</b></i>
+	{% endif %}
 
-        <!-- Carrousel -->
-        <div class="carousel-inner">
-          {% for carousel in carousel %}
-          <div class="carousel-item {% if loop.first %}active{% endif %}">
-            <img src="{{carousel.picture}}" alt="First slide" class="d-block w-100">
-            <div class="carousel-caption d-none d-md-block" style="color:yellow; text-shadow: 2px 6px 3px rgba(0,0,0,0.5)">
-              <h1><b>{{ carousel.caption }}</b></h1>
-              {# <p style="color:blue; font-size: 1.5rem"><b>Déjà 10 ans d'existence et d'exigence au service de votre information !</b></p> #}
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-
-        <!-- Contrôles -->
-        <a class="carousel-control-prev" href="#demo" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Précédent</span>
-        </a>
-        <a class="carousel-control-next" href="#demo" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Suivant</span>
-        </a>
+      <div class="card-body">
+	  	{# <hr> #}
+        <div class="card-title text-center"><img class="mt-3" src="{{ users.avatar }}" alt="Avatar d'un abonné" style="max-width:120px; border-radius:50%"><h2 class="mt-2"><b>{{ users.username }}</b></h2></div>
+		<hr>
+        <h2 class="card-text"><b style="color: black">{{ users.num }}</b> commentaire(s)</h2>
+        {# <a href="#" class="btn btn-primary">Go somewhere</a> #}
       </div>
+	  </div>
     </div>
-
-<div class = "container jumbotron bg-primary text-light">
-  <h1 class = "display-3"> <font style = "vertical-align: inherit;"> <font style = "vertical-align: inherit;"> Bienvenue sur .BLOG ! </font> </font> </h1>
-  <p class = "lead mt-3"> <font style = "vertical-align: inherit;"><h4> <font style = "vertical-align: inherit;"> Qui sommes nous ? Il s'agit d'une simple unité de héros, un composant simple de style jumbotron pour attirer une attention particulière sur le contenu ou les informations prévues </font> </font> </h4></p>
-  <hr class = "my-4" style="border: none; border-bottom: 2px solid #fff; font-size: 3px;">
-  <p><h4><font style = "vertical-align: inherit;"> <font style = "vertical-align: inherit;"> Que faisons nous ? Il utilise des classes utilitaires pour la typographie et l'espacement pour espacer le contenu dans le plus grand conteneur . </font> </font> </p></h4>
-  <p class = "lead">
-    <a class="btn btn-success btn-lg mt-3 middle" href="{{ path('main' )}}" role="button"> <font style = "vertical-align: inherit;"> <font style = "vertical-align: inherit;"><i class="fas fa-eye"></i><b> Découvrir nos articles !</b> </font> </font> </a>
-  </p>
+  </div>
+  {% endfor %}
+</div>
+</div>
 </div>
 
-{# <h2 style="color:black; font-size: 1.8rem; text-align:center" class="mb-4">Qu'est-ce que .blog ?</h2>
-<p style="font-size: 1.5rem" class="mb-4">C'est un outil qui a pour but de mettre en avant les sujets qui font l'actualité, votre actualité. Faites l'actualité en partageant vos coups de gueule, vos coups de coeur. Débattez sans fin en réagissant aux publications de notre communauté de contributeurs !  </p>
-<h3 style="color:blue; font-size: 2.5rem; text-align:center" class="mb-4">"Avec <b><i>.blog</i></b>, ne subissez plus l'actualité, devenez en acteur"</h3>
-<p style="font-size: 1.5rem" class="mb-4">Parce que pour nous, être citoyen c'est faire partie d'un tout sans renier son individualité, c'est partager dans le respect, s'enrichir des différences, s'ouvrir aux opinions d'autrui.</p>
-<p style="font-size: 1.5rem" class="mb-4">Nous pensons que nous sommes riche de ce que nous apprenons et pas de ce que nous savons</p>
-<p> #}
-</article>
-{% endblock %}
+	<h1 class="container text-center mt-5 mb-5 bg-primary p-2 rounded-pill" style="color:yellow; text-shadow: 4px 6px 8px black;"><b>LES ARTICLES LES MIEUX NOTES</b></h1>
 
+  <article class="container">
+		<div class="row alert alert-info mt-4 ">
+    {% for article in HomeBestArticles %}
+    <div class="col-md-4">
+			<div class="card mt-2 mb-2">
+					<div class="card-header text-center">
+	
+          <div>
+		  		<h5 class="mt-2" style="color: black; text-shadow: 4px 6px 8px black;"><b><img src="{{article.avatar}}" alt="Photo auteur" style="max-width:60px; border-radius:50%; text-align: left"> {{article.username}}<h6 class="float-right mt-2" style="text-align: right"> {{ article.createdAt | date ('d/m/Y') }} <br> {{ article.createdAt | date ('H:i') }}</h6></b></h5>
+
+				{# <h2 class="mt-2" style="color:white; text-shadow: 4px 6px 8px black;"><b><img src="{{app.user.avatar}}" style="max-width:45px; border-radius:50%"> Votre avis :<h4 class="float-right mt-2">{{ comment.createdAt | date ('d/m/Y') }} à {{ comment.createdAt | date ('H:i') }}</h4</b></h2> #}
+
+				{# <p class="text-left" style="color: blue;"><img src="{{article.avatar}}" alt="Photo auteur" style="max-width:50px; border-radius:50%"> <b>{{article.username}}</b></p>
+            <br>
+			<p class="float-right"><b> {{ article.createdAt | date ('d/m/Y') }}</b> à <b> {{ article.createdAt | date ('H:i') }}</b></p> #}
+            <hr>
+			
+            <p class="alert alert-dark" style="font-size: 1.8em; color:yellow; text-shadow: 1px 5px 10px black;"><b>{{ article.note | number_format(1, '.', ',') }} / 5</b></p>
+			{# {% for articles in articles %}
+
+					<hr class="mb-4">
+					{% if articles.comments | length > 0 %}
+
+						<div class="float-right mr-2 btn btn-success">
+							{% include 'template_parts/_rating.html.twig' with {'rating' : articles.AvgRatings} %}
+							<br>
+						</div>
+					{% endif %}
+			{% endfor %}		 #}
+            <hr>
+            {# {% for articles in articles %}
+            <div class="float-right mr-2 btn btn-success">
+							{% include 'template_parts/_rating.html.twig' with {'rating' : articles.AvgRatings} %}
+							<br>
+						</div>
+            {% endfor %} #}
+						{# <p>{% include 'template_parts/_rating.html.twig' with {'rating' : article.AvgRatings} %}</p> #}
+         
+						{# <p>Publié par  le {{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }}</p> #}
+						{# <p>{% include 'template_parts/_rating.html.twig' with {'rating' : article.AvgRatings} %}</p> #}
+						<img src="{{article.image}}" alt="Illustration de l'article" class="img-fluid">
+            </div>
+						<div class="card-body">
+							<h5 class="text-justify mb-3"><b>{{article.title | slice(0,150)|raw}}</b></h5>
+							<p class="text-justify">{{article.content | slice(0,200)|raw}} .....</p>
+						</div>
+						<div>
+              {% if app.user %}
+							    <a href="{{ path('main_show', {'id' : article.id}) }})" class="btn btn-primary btn-lg ml-2 mr-2 mt-1 mb-2" style="color:yellow; text-shadow: 6px 10px 10px black;"><b>LIRE L'ARTICLE</b></a>
+              {% else %}   
+                  <a href="{{path('security_login')}}" class="btn btn-primary btn-lg ml-2 mr-2 mt-1 mb-2" style="color:yellow; text-shadow: 6px 10px 10px black;"><b>LIRE L'ARTICLE</b></a>
+						  {% endif %}
+            </div>
+				</div>
+        </div>
+			{# </div> #}
+		</div>
+	{% endfor %}
+  </article>
+
+  <h1 class="container text-center mt-5 mb-5 bg-primary p-2 rounded-pill" style="color:yellow; text-shadow: 4px 6px 8px black;"><b>LES ARTICLES LES PLUS COMMENTES</b></h1>
+
+  <article class="container">
+		<div class="row alert alert-info mt-4 ">
+    {% for article in MostCommentedArticles %}
+    <div class="col-md-4">
+			<div class="card mt-2 mb-2">
+					<div class="card-header text-center">
+          <div>
+
+		  		<h5 class="mt-2" style="color: black; text-shadow: 4px 6px 8px black;"><b><img src="{{article.avatar}}" alt="Photo auteur" style="max-width:60px; border-radius:50%; text-align: left"> {{article.username}}<h6 class="float-right mt-2" style="text-align: right"> {{ article.createdAt | date ('d/m/Y') }} <br> {{ article.createdAt | date ('H:i') }}</h6></b></h5>
+				
+
+						{# <p class="text-left" style="color: blue;"><b>Publié par :</b> <img src="{{article.avatar}}" alt="Photo auteur" style="max-width:50px; border-radius:50%"> <b>{{article.username}}</b> #}
+            {# <br><b>Le </b><b>{{ article.createdAt | date ('d/m/Y') }}</b> à <b>{{ article.createdAt | date ('H:i') }}</b> </p> #}
+            <hr>
+            {# <p style="font-size: 1.8em; color:yellow; text-shadow: 1px 5px 10px black;">{{ article.note | number_format(1, '.', ',')}} / 5</p> #}
+            
+            {# {% for articles in articles %}
+            <div class="float-right mr-2 btn btn-success">
+							{% include 'template_parts/_rating.html.twig' with {'rating' : articles.AvgRatings} %}
+							<br>
+						</div>
+            {% endfor %} #}
+						{# <p>{% include 'template_parts/_rating.html.twig' with {'rating' : article.AvgRatings} %}</p> #}
+         
+						{# <p>Publié par  le {{ article.createdAt | date ('d/m/Y') }} à {{ article.createdAt | date ('H:i') }}</p> #}
+						{# <p>{% include 'template_parts/_rating.html.twig' with {'rating' : article.AvgRatings} %}</p> #}
+						<img src="{{article.image}}" alt="Illustration de l'article" class="img-fluid">
+            </div>
+						<div class="card-body">
+							<h5 class="text-justify mb-3"><b>{{article.title | slice(0,200)|raw}}</b></h5>
+							<p class="text-justify">{{article.content | slice(0,250)|raw}} .....</p>
+						</div>
+						<div>
+              {% if app.user %}
+							    <a href="{{ path('main_show', {'id' : article.id}) }})" class="btn btn-primary btn-lg ml-2 mr-2 mt-1 mb-2" style="color:yellow; text-shadow: 6px 10px 10px black;"><b>LIRE L'ARTICLE</b></a>
+              {% else %}   
+                  <a href="{{path('security_login')}}" class="btn btn-primary btn-lg ml-2 mr-2 mt-1 mb-2" style="color:yellow; text-shadow: 6px 10px 10px black;"><b>LIRE L'ARTICLE</b></a>
+						  {% endif %}
+            </div>
+				</div>
+        </div>
+			{# </div> #}
+		</div>
+	{% endfor %}
+  </article>
+
+		<div class="container mt-5 mb-5">
+			<div
+				id="demo" class="carousel slide" data-ride="carousel">
+				<!-- Indicateurs -->
+				<ul class="carousel-indicators">
+					<li data-target="#demo" data-slide-to="0" class="active"></li>
+					<li data-target="#demo" data-slide-to="1"></li>
+					<li data-target="#demo" data-slide-to="2"></li>
+					<li data-target="#demo" data-slide-to="3"></li>
+				</ul>
+
+				<!-- Carrousel -->
+				<div class="carousel-inner">
+					{% for carousel in carousel %}
+						<div class="carousel-item {% if loop.first %}active{% endif %}">
+							<img src="{{carousel.picture}}" alt="First slide" class="d-block w-100">
+							<div class="carousel-caption d-none d-md-block" style="color:yellow; text-shadow: 2px 6px 3px rgba(0,0,0,0.5)">
+								<h1>
+									<b>{{ carousel.caption }}</b>
+								</h1>
+								{# <p style="color:blue; font-size: 1.5rem"><b>Déjà 10 ans d'existence et d'exigence au service de votre information !</b></p> #}
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+
+				<!-- Contrôles -->
+				<a class="carousel-control-prev" href="#demo" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Précédent</span>
+				</a>
+				<a class="carousel-control-next" href="#demo" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Suivant</span>
+				</a>
+			</div>
+		</div>
+
+		{# <div class = "container jumbotron bg-primary text-light">
+		  <h1 class = "display-3"> <font style = "vertical-align: inherit;"> <font style = "vertical-align: inherit;"> Bienvenue sur .BLOG ! </font> </font> </h1>
+		  <p class = "lead mt-3"> <font style = "vertical-align: inherit;"><h4> <font style = "vertical-align: inherit;"> Qui sommes nous ? Il s'agit d'une simple unité de héros, un composant simple de style jumbotron pour attirer une attention particulière sur le contenu ou les informations prévues </font> </font> </h4></p>
+		  <hr class = "my-4" style="border: none; border-bottom: 2px solid #fff; font-size: 3px;">
+		  <p><h4><font style = "vertical-align: inherit;"> <font style = "vertical-align: inherit;"> Que faisons nous ? Il utilise des classes utilitaires pour la typographie et l'espacement pour espacer le contenu dans le plus grand conteneur . </font> </font> </p></h4>
+		  <p class = "lead">
+		    <a class="btn btn-success btn-lg mt-3 middle" href="{{ path('main' )}}" role="button"> <font style = "vertical-align: inherit;"> <font style = "vertical-align: inherit;"><i class="fas fa-eye"></i><b> Découvrir nos articles !</b> </font> </font> </a>
+		  </p>
+		</div> #}
+
+		{# <h2 style="color:black; font-size: 1.8rem; text-align:center" class="mb-4">Qu'est-ce que .blog ?</h2>
+		<p style="font-size: 1.5rem" class="mb-4">C'est un outil qui a pour but de mettre en avant les sujets qui font l'actualité, votre actualité. Faites l'actualité en partageant vos coups de gueule, vos coups de coeur. Débattez sans fin en réagissant aux publications de notre communauté de contributeurs !  </p>
+		<h3 style="color:blue; font-size: 2.5rem; text-align:center" class="mb-4">"Avec <b><i>.blog</i></b>, ne subissez plus l'actualité, devenez en acteur"</h3>
+		<p style="font-size: 1.5rem" class="mb-4">Parce que pour nous, être citoyen c'est faire partie d'un tout sans renier son individualité, c'est partager dans le respect, s'enrichir des différences, s'ouvrir aux opinions d'autrui.</p>
+		<p style="font-size: 1.5rem" class="mb-4">Nous pensons que nous sommes riche de ce que nous apprenons et pas de ce que nous savons</p>
+		<p> #}
+	</article>
+{% endblock %}

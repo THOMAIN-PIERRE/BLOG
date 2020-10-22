@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class SearchType extends AbstractType
 {
 
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -27,33 +28,31 @@ class SearchType extends AbstractType
                 ]
             ])
 
+            // On récupère toutes les catégories disponibles en BDD
             ->add('categories', EntityType::class, [
                 'label' => false,
                 'required' => false,
                 'class' => Category::class,
                 'expanded' => true,
                 'multiple' => true,
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'Rechercher'
-                ]
+                
             ])
 
-            ->add('min', NumberType::class, [
-                'label' => false,
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'Note min'
-                ]
-            ])
+            // ->add('min', NumberType::class, [
+            //     'label' => false,
+            //     'required' => false,
+            //     'attr' => [
+            //         'placeholder' => 'Min'
+            //     ]
+            // ])
 
-            ->add('max', NumberType::class, [
-                'label' => false,
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'Note max'
-                ]
-            ])
+            // ->add('max', NumberType::class, [
+            //     'label' => false,
+            //     'required' => false,
+            //     'attr' => [
+            //         'placeholder' => 'Max'
+            //     ]
+            // ])
 
             // ->add('promo', CheckboxType::class, [
             //     'label' => 'En promotion',

@@ -2,16 +2,19 @@
 
 namespace App\Controller;
 
-
-use App\Data\SearchData;
-use App\Data\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/")
+     * 
+     * @Route("/main/article")
      */
-
+    public function index()
+    {
+        return $this->render('comment/index.html.twig', [
+            'controller_name' => 'CommentController',
+        ]);
+}
 }

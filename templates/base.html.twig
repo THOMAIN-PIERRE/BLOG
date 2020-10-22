@@ -19,7 +19,37 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
        
  
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <style>
+
+                {# .grid{
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    grid-gap: 20px;: 32vh;
+                } #}
+
+                .filter{
+                    display: block;
+                    position: sticky;
+                    top: 25vh;
+                }
+
+                .filActu{
+                    display: block;
+                    position: sticky;
+                    top: 15vh;
+                }
+
+                {# .vertical-line{
+                    border-left: 2px solid #000;
+                    display: inline-block;
+                    height: 130px;
+                    margin: 0 60px;
+                } #}
+            
+            </style>
+        
+        {% endblock %}
     </head>
     <body>
 

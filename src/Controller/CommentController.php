@@ -13,7 +13,7 @@ class CommentController extends AbstractController
      */
     public function createComment()
     {
-        return $this->render('comment/index.html.twig', [
+        return $this->render('article/index.html.twig', [
             'controller_name' => 'CommentController',
         ]);
     }

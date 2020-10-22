@@ -1,0 +1,61 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des evènements{% endblock %}
+
+{% block body %}
+    <div class="admin-page {{ app.user.adminBgColor }}">
+
+        <div class="container">
+            <div class="row">
+                <div class="col table-responsive mt-5">
+                    {# {% for label, messages in app.flashes %}
+                        <div class="container">
+                            <div class="alert alert-{{ label }}">
+                                {% for message  in messages %}
+                                    <p>{{ message | raw }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %} #}
+                    <a href="{{ path('admin_event_new') }}" class="btn btn-primary" style="float: right"><strong>Ajouter</strong></a>
+                    <h2>LISTE DES EVENEMENTS</h2>
+                    <table class="table table-hover mt-3">
+                        <thead class="{{ app.user.adminTableColor }} text-white">
+
+                            <tr>
+                                <th class="text-center align-middle">#</th>
+                                <th class="text-center align-middle">Titre</th>
+                                <th class="text-center align-middle">Sous-titre</th>
+                                <th class="text-center align-middle">Date</th>
+                                <th class="text-center align-middle">Lieu</th>
+                                <th class="text-center align-middle">Image</th>
+                                <th class="text-center align-middle">Description</th>
+                                {# <th class="text-center align-middle" style="width:16%;">Date de publication</th> #}
+                                <th class="text-center align-middle">Actions</th>
+                            </tr>
+                        </thead> 
+                        {% for event in pagination.EventAdmin %}
+                            <tr class="alert alert-info">
+                                <td class="text-center align-middle">{{event.id}}</td>
+                                <td class="text-center align-middle">{{event.name}}</td>
+                                <td class="text-center align-middle">{{event.subtitle}}</td>
+                                <td class="text-center align-middle">{{event.date | date ('d/m/Y') }} à {{ event.date | date ('H:i') }}</td>
+                                <td class="text-center align-middle">{{event.place}}</td>
+                                <td class="text-center align-middle" style="width:20%;"><img src="{{ event.picture }}" alt="Illustration de l'évènement" style="width: 140px; height:100px;" class="img-fluid"></td>
+                                <td class="text-center align-middle">{{event.description | slice(0,180) | raw }}</td>
+                                <td class="text-center align-middle">
+                                    <a href="{{ path('admin_event_edit', {'id': event.id}) }}" class="btn btn-success mr-2 mb-2"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                    <a href="{{ path('admin_event_delete', {'id': event.id}) }}" class="btn btn-danger mr-2 mb-2"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <hr>
+                    {% include 'admin/template_parts/pagination.html.twig' with {'route' : 'admin_event'} %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+     <footer class="{{ app.user.adminBgColor }}" style="height: 1000px;"></footer>
+ {% endblock %} 

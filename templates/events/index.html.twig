@@ -1,0 +1,272 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evènements{% endblock %}
+
+{% block body %}
+
+
+<article class="container
+			
+			{% if app.user %}
+			{{ app.user.bgColor }}
+			{% else %}
+			
+			{% endif %}
+			">
+		<div class="container jumbotron bg-primary text-light mt-4 img-fluid" style="background-image:url(https://blog.privateaser.com/wp-content/uploads/2017/11/How-to-get-the-most-out-of-conferences-1024x421.jpg); background-repeat:no-repeat; background-size: 100% 100%;">
+			<h1 class="display-3">
+				<font style="vertical-align: inherit;">
+					<font style="vertical-align: inherit;">
+						<i style="text-shadow: 6px 6px 5px black;">EVENEMENTS : venez nous retrouver !</i>
+					</font>
+				</font>
+			</h1>
+			<p class="lead mt-3">
+				<font style="vertical-align: inherit;">
+					<h4>
+						<font style="vertical-align: inherit; text-shadow: 6px 6px 5px black;">
+							Qui sommes nous ? Il s'agit d'une simple unité de héros, un composant simple de style jumbotron pour attirer une attention particulière sur le contenu ou les informations prévues
+						</font>
+					</font>
+				</h4>
+			</p>
+			<hr class="my-4" style="border: none; border-bottom: 2px solid #fff; font-size: 3px; text-shadow: 6px 6px 5px black;">
+			<p>
+				<h4>
+					<font style="vertical-align: inherit;">
+						<font style="vertical-align: inherit; text-shadow: 6px 6px 5px black;">
+							Que faisons nous ? Il utilise des classes utilitaires pour la typographie et l'espacement pour espacer le contenu dans le plus grand conteneur .
+						</font>
+					</font>
+				</p>
+			</p>
+		</h4>
+    {% if is_granted('ROLE_ADMIN') %}
+		<p class="lead">
+			<a class="btn btn-primary btn-lg mt-2 p-3 middle" href="{{ path('events_new') }}" role="button">
+				<font style="vertical-align: inherit;">
+					<font style="vertical-align: inherit;">
+						<i class="fas fa-plus"></i>
+						<b>
+							Ajouter un évènement !</b>
+					</font>
+				</font>
+			</a>
+		</p>
+    {% endif %}
+</article>
+
+<div class="container mt-4 mb-4">
+  <h1 class="bg-success p-3 rounded-pill" style="color: yellow; text-shadow: 8px 10px 10px black;"><i class="far fa-calendar-alt text-light"></i><b> PROCHAINS EVENEMENTS !</b></h1>
+</div>
+
+{# {% for event in pagination.event %} #}
+
+{% for event in eventToCome %}
+{% if numberOfEvents >= 1 %}
+
+    
+    <div class="container mb-4">
+    {% if loop.first %}
+    <div class="border mb-2 bg-success text-light rounded">
+    {% else %} 
+    <hr class="bg-dark w-50 mb-4" style="margin: auto; height: 0.5rem;">
+    <div class="border mb-2 bg-secondary text-light rounded">
+    {% endif %}
+      <!-- Page Heading -->
+      <h1 class="my-2 ml-3" style="color: white; text-shadow: 8px 10px 10px black;">{{ event.name }}<br>
+      <small><i>{{ event.subtitle }}</i></small></h1>
+
+      <!-- Project Two -->
+      <div class="row">
+        <div class="col-md-7">
+          <a href="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="{{ event.picture }}" alt="Photo du lieu de l'évènement" style="width: 700px; height:300px;">
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3 style="color: white; text-shadow: 8px 10px 10px black;"><b><i>{{ event.date | date ('d/m/Y') }} à {{ event.date | date ('H:i') }}</i></b></h3>
+          <h5 class="mb-4" style="color: white; text-shadow: 8px 10px 10px black;"><b><i>{{ event.place }}</i></b></h5>
+          <p>{{ event.description }}</p>
+          <a class="btn btn-primary mt-2" href="{{ path('event_show', {'id': event.id}) }}"><i class="fas fa-eye"></i><b> Plus de détails</b></a>
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      
+      {# {% else %} #}
+      {# {% if loop.first %}
+      <div class="container bg-secondary text-light text-center rounded p-5"><h1><i>Aucun évènement n'est actuellement planifié !</i></h1></div>
+      {% else %}
+      {% endif %} #}
+      {% endif %}
+      {% endfor %}
+      
+       <div class="mb-5">
+  {# {% include 'admin/template_parts/pagination.html.twig' with {'route' : 'event_index'} %} #}
+</div>
+
+<!-- Page Content -->
+    {# <div class="container">
+    <div class="border mb-2 bg-success text-light">
+    <h1 class="mt-2 ml-3" style="color: yellow; text-shadow: 8px 10px 10px black;"><i class="far fa-clock text-light"></i><b> PROCHAIN RENDEZ-VOUS !</b></h1>
+    <hr class="bg-light h-2">
+      <!-- Page Heading -->
+      <h1 class="my-3 ml-3">Université du temps libre : l'Europe face au terrorisme<br>
+      <small><i>Conférence de Jean Hubert </i></small></h1>
+    </div>
+    </div>
+
+    <div class="container">
+    <div class="border mb-5 bg-success text-light">
+      <!-- Project One -->
+      <div class="row">
+        <div class="col-md-7">
+          <a href="#"alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3><b><i>17 Octobre 2020</i></b></h3>
+          <h5 class="mb-4"><b><i>Paris Sorbonne - Amphithéâtre D</i></b></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.</p>
+          <a class="btn btn-primary mt-2" href="#">View Project</a>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div> #}
+      <!-- /.row -->
+
+
+
+
+
+    {# <div class="container">
+    <h1 class="mt-5 mb-2 bg-secondary p-3" style="color: yellow; text-shadow: 8px 10px 10px black;"><i class="fas fa-ellipsis-h text-light"></i><b> LES EVENEMENTS A VENIR !</b></h1>
+    </div>
+    <div class="container">
+    <div class="border mb-2 bg-secondary text-light"> 
+      <!-- Page Heading -->
+      <h1 class="my-2 ml-3">Université du temps libre : l'Europe face au terrorisme<br>
+      <small><i>Conférence de Jean Hubert </i></small></h1>
+
+      <!-- Project Two -->
+      <div class="row">
+        <div class="col-md-7">
+          <a href="#">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3><b><i>17 Octobre 2020</i></b></h3>
+          <h5 class="mb-4"><b><i>Paris Sorbonne - Amphithéâtre D</i></b></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.</p>
+          <a class="btn btn-primary mt-2 mb-2" href="#">View Project</a>
+        </div>
+      </div>
+      </div>
+       </div>
+      </div>
+      <!-- /.row -->
+
+    <div class="container">
+      <hr class="bg-light h-2">
+    </div> 
+
+      <div class="container">
+    <div class="border mb-3 bg-secondary text-light"> 
+      <!-- Page Heading -->
+      <h1 class="my-2 ml-3">Université du temps libre : l'Europe face au terrorisme<br>
+      <small><i>Conférence de Jean Hubert </i></small></h1> #}
+
+      <!-- Project Two -->
+      {# <div class="row">
+        <div class="col-md-7">
+          <a href="#">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3><b><i>17 Octobre 2020</i></b></h3>
+          <h5 class="mb-4"><b><i>Paris Sorbonne - Amphithéâtre D</i></b></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.</p>
+          <a class="btn btn-primary mt-2 mb-2" href="#">View Project</a>
+        </div>
+      </div>
+      </div>
+      </div>
+      </div> #}
+
+      
+      <!-- /.row -->
+    
+    {# <div class="container">
+      <hr class="bg-light h-2">
+    </div> 
+
+      <div class="container">
+    <div class="border mb-3 bg-secondary text-light"> 
+      <!-- Page Heading -->
+      <h1 class="my-2 ml-3">Université du temps libre : l'Europe face au terrorisme<br>
+      <small><i>Conférence de Jean Hubert </i></small></h1>
+
+      <!-- Project Two -->
+      <div class="row">
+        <div class="col-md-7">
+          <a href="#">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h3><b><i>17 Octobre 2020</i></b></h3>
+          <h5 class="mb-4"><b><i>Paris Sorbonne - Amphithéâtre D</i></b></h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.</p>
+          <a class="btn btn-primary mt-2 mb-2" href="#">View Project</a>
+        </div>
+      </div>
+      </div>  
+      </div>  
+      </div>  
+      </div>   #}
+
+      <!-- /.row -->
+
+    {# <div class="container">
+      <hr class="bg-light h-2">
+    </div>  #}
+
+    {# <div class="container"> #}
+      <!-- Pagination -->
+      {# <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+
+    </div> #}
+    <!-- /.container -->
+	{# </div> #}
+    {# </div>
+    </div> #}
+{% endblock %}

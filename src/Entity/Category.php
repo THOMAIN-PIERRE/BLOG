@@ -34,6 +34,11 @@ class Category
      */
     private $articles;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $color;
+
     //Ajouté dans l'entité category pour convertir ces categories en chaîne de caractères
      /**
      * Transform to string
@@ -108,6 +113,18 @@ class Category
                 $article->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

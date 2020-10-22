@@ -5,6 +5,9 @@ namespace App\Form;
 use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -28,6 +31,27 @@ class RegistrationType extends AbstractType
             ->add('email')
             ->add('username')
             ->add('password', PasswordType::class)
+            // ->add('password', PasswordType::class, [
+            //     // instead of being set onto the object directly,
+            //     // this is read and encoded in the controller
+            //     'mapped' => false,
+            //     'constraints' => [
+            //        new NotBlank([
+            //           'message' => 'Le mot de passe ne peut être vide',
+            //        ]),
+            //        new Length([
+            //           'min' => 8,
+            //           'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+            //           // max length allowed by Symfony for security reasons
+            //           'max' => 4096,
+            //        ]),
+            //        new Regex([
+            //           'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i',
+            //           'htmlPattern' => '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+            //           'message' => 'Votre mot de passe doit comporter au moins une minuscule, une majuscule, un chiffre et un caractère spécial ',
+            //        ]),
+            //     ],
+            //  ])
             ->add('confirm_password', PasswordType::class)
             ->add('avatar', UrlType::class)
             ->add('rgpd', CheckboxType::class, [

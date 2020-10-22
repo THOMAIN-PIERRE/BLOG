@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Event;
 use App\Entity\Users;
 use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\AccountType;
 use App\Entity\PasswordUpdate;
 use App\Form\PasswordUpdateType;
+use App\Service\PaginationService;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -119,18 +122,22 @@ class AccountController extends AbstractController
     /**
      * Permet d'afficher la liste des articles écrits par un utilisateur
      * 
-     * @Route("/account/publications", name="account_publications")
+     * @Route("/account/publications{page<\d+>?1}", name="account_publications")
      * IsGranted("ROLE_EDITOR")
      *
      * @return Response
      */
-    public function publications() {
+    public function publications($page, PaginationService $pagination) {
 
         $repo = $this->getDoctrine()->getRepository(Article::class);
 
         $articles = $repo->findAll();
 
+        $pagination->setEntityClass(Article::class)
+                   ->setPage($page);
+
         return $this->render('account/publications.html.twig', [
+            'pagination' => $pagination,
             'articles' => $articles
         ]);
 
@@ -156,6 +163,29 @@ class AccountController extends AbstractController
 
     }
 
+
+    /**
+     * Permet d'afficher la liste des évènements créés par un administrateur
+     * 
+     * @Route("/account/events", name="account_events")
+     * IsGranted("ROLE_ADMIN")
+     *
+     * @return Response
+     */
+    public function events() {
+
+        $repo = $this->getDoctrine()->getRepository(Event::class);
+
+        $events = $repo->findAll();
+
+        return $this->render('account/events.html.twig', [
+            'events' => $events
+        ]);
+
+    }
+
+
+
     /**
      *Permet de supprimer son compte utilisateur
      * 
@@ -175,5 +205,7 @@ class AccountController extends AbstractController
 
         return $this->redirectToRoute('main');
     }
+
+    
 
 }
